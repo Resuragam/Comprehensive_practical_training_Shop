@@ -1,4 +1,4 @@
-<script lang='ts' setup>
+<script lang='ts' setup name="home">
 import { ref } from 'vue'
 const n = ref('sadasdasdas')
 </script>
