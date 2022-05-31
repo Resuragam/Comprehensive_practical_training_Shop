@@ -1,7 +1,7 @@
 <script lang='ts' setup name="login">
 import { ref } from "vue";
-import loginFormByPhone from "../components/login/LoginFormByPhone.vue";
-import loginFormByUserName from "../components/login/loginFormByUserName.vue";
+import loginFormByPhone from "../../components/login/LoginFormByPhone.vue";
+import loginFormByUserName from "../../components/login/loginFormByUserName.vue";
 
 let checkedByTool = ref(true);
 

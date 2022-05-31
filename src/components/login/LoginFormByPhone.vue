@@ -13,7 +13,7 @@ const loginInfo: LoginInfo = reactive({
   userPassword: "",
   agreementCheck: false,
   ableLogin: computed(() => {
-    if (loginInfo.userPhone.length > 10 && loginInfo.userPassword.length > 5)
+    if (loginInfo.userPhone.length > 10  && loginInfo.userPassword.length > 5)
       return true;
     else return false;
   }),
