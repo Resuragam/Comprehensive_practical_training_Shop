@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     vue(),
     WindiCSS(),
-    Icons({autoInstall: true}),
+    Icons({ autoInstall: true }),
     styleImport({
       resolves: [VantResolve()],
     }),

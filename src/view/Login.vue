@@ -1,5 +1,13 @@
 <script lang='ts' setup name="login">
-import loginForm from '../components/login/LoginForm.vue';
+import { ref } from "vue";
+import loginFormByPhone from "../components/login/LoginFormByPhone.vue";
+import loginFormByUserName from "../components/login/loginFormByUserName.vue";
+
+let checkedByTool = ref(true);
+
+const handoffLogin = () => {
+  checkedByTool.value = !checkedByTool.value;
+};
 </script>
 
 <template>
@@ -8,10 +16,17 @@ import loginForm from '../components/login/LoginForm.vue';
       <van-icon name="cross" />
     </div>
     <div class="">
-      <img src="../assets/login/illustrations.svg" alt="" class="h-240px m-auto "/>
+      <img
+        src="../assets/login/illustrations.svg"
+        alt=""
+        class="h-240px m-auto"
+      />
     </div>
-    <div>
-      <loginForm></loginForm>
+    <div v-show="checkedByTool">
+      <loginFormByPhone @handoffLogin="handoffLogin"></loginFormByPhone>
+    </div>
+    <div v-show="!checkedByTool">
+      <loginFormByUserName @handoffLogin="handoffLogin"></loginFormByUserName>
     </div>
   </div>
 </template>
