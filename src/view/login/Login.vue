@@ -1,7 +1,7 @@
 <script lang='ts' setup name="login">
 import { ref } from "vue";
-import loginFormByPhone from "../../components/login/LoginFormByPhone.vue";
-import loginFormByUserName from "../../components/login/loginFormByUserName.vue";
+import loginFormByPhone from "@/components/login/LoginFormByPhone.vue";
+import loginFormByUserName from "@/components/login/loginFormByUserName.vue";
 
 let checkedByTool = ref(true);
 
@@ -17,7 +17,7 @@ const handoffLogin = () => {
     </div>
     <div class="">
       <img
-        src="../assets/login/illustrations.svg"
+        src="@/assets/login/illustrations.svg"
         alt=""
         class="h-240px m-auto"
       />
