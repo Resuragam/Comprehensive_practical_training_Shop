@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory  } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import layout from '@/layouts/defaulte.vue'
 
 const router = createRouter({
@@ -12,24 +12,37 @@ const router = createRouter({
                 {
                     path: '/home',
                     name: 'home',
-                    component: () => import('../view/home/Home.vue'),
+                    component: () => import('@/view/home/Home.vue'),
+                    redirect: '/home/recommend',
+                    children: [
+                        {
+                            path: '/home/recommend',
+                            name:'recommend',
+                            component: () => import('@/view/home/Recommend.vue'),
+                        },
+                        {
+                            path: '/home/:good',
+                            name:"good",
+                            component: () => import('@/view/home/Good.vue'),
+                        }
+                    ]
                 },
                 {
                     path: '/shopcart',
                     name: 'shopcart',
-                    component: () => import('../view/shopCart/ShopCart.vue'),
+                    component: () => import('@/view/shopCart/ShopCart.vue'),
                 },
                 {
                     path: '/my',
                     name: 'my',
-                    component: () => import('../view/my/my.vue'),
+                    component: () => import('@/view/my/my.vue'),
                 },
             ]
         },
         {
             path: '/login',
             name: "login",
-            component: () => import('../view/login/Login.vue'),
+            component: () => import('@/view/login/Login.vue'),
         },
     ]
 })
