@@ -2,9 +2,13 @@
 import { ref } from "vue";
 import loginFormByPhone from "@/components/login/LoginFormByPhone.vue";
 import loginFormByUserName from "@/components/login/loginFormByUserName.vue";
+import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
+const route = useRoute()
+const router = useRouter()
 let checkedByTool = ref(true);
-
+console.warn(route.path)
 const handoffLogin = () => {
   checkedByTool.value = !checkedByTool.value;
 };
@@ -13,7 +17,7 @@ const handoffLogin = () => {
 <template>
   <div class="m-2">
     <div>
-      <van-icon name="cross" />
+      <van-icon name="cross" @click="router.back()"/>
     </div>
     <div class="">
       <img

@@ -7,7 +7,7 @@ specifiers:
   axios: ^0.27.2
   eslint: ^8.16.0
   eslint-plugin-vue: ^9.0.1
-  js-cookies: ^1.0.4
+  js-cookie: ^3.0.1
   typescript: ^4.5.4
   unplugin-icons: ^0.14.3
   vant: ^3.4.9
@@ -24,7 +24,7 @@ dependencies:
   axios: 0.27.2
   eslint: 8.16.0
   eslint-plugin-vue: 9.0.1_eslint@8.16.0
-  js-cookies: 1.0.4
+  js-cookie: 3.0.1
   vant: 3.4.9_vue@3.2.36
   vue: 3.2.36
   vue-router: 4.0.13_vue@3.2.36
@@ -1142,8 +1142,9 @@ packages:
     hasBin: true
     dev: true
 
-  /js-cookies/1.0.4:
-    resolution: {integrity: sha512-cO1SHDH7zJsi8FihHmDtcWx90mWmrfGOrcLKPeaEX6tLyuTK2wnzgdmNa34Q6rNAd6VhQUgjDt5Eyl90VI/Fpg==}
+  /js-cookie/3.0.1:
+    resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
+    engines: {node: '>=12'}
     dev: false
 
   /js-yaml/4.1.0:
