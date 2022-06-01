@@ -21,7 +21,7 @@ const handoffLogin = () => {
     </div>
     <div class="">
       <img
-        src="@/assets/login/illustrations.svg"
+        src="@/static/img/login/illustrations.svg"
         alt=""
         class="h-240px m-auto"
       />
