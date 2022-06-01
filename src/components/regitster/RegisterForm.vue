@@ -1,26 +1,28 @@
-<script lang='ts' setup name="loginFormByPhone">
-import { loginByPhone } from "@/api/login";
-import { setToken } from "@/utils/cookies";
+<script lang='ts' setup name="registerForm">
+import { registerUser } from "@/api/register";
 import { Toast } from "vant";
 import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
-interface LoginInfo {
+interface RegisterInfo {
   userPhone: string;
   userPassword: string;
-  agreementCheck: boolean; // 协议
+  userName: string;
+  agreementCheck: boolean;
   ableLogin: boolean;
 }
 
-const loginInfo: LoginInfo = reactive({
+const registerInfo: RegisterInfo = reactive({
   userPhone: "",
   userPassword: "",
+  userName: "",
   agreementCheck: false,
   ableLogin: computed(() => {
     if (
-      loginInfo.userPhone.length > 10 &&
-      loginInfo.userPassword.length > 5 &&
-      loginInfo.agreementCheck === true
+      registerInfo.userPhone.length > 10 &&
+      registerInfo.userPassword.length > 5 &&
+      registerInfo.userName.length > 5 &&
+      registerInfo.agreementCheck === true
     )
       return true;
     else return false;
@@ -28,31 +30,27 @@ const loginInfo: LoginInfo = reactive({
 });
 
 const router = useRouter();
-// 父子组件函数
-const emit = defineEmits(["handoffLogin"]);
-
-const onHandoffLogin = () => {
-  emit("handoffLogin");
-};
-
-let clickSubmit = ref(false);
+const clickSubmit = ref(false);
 const onSubmit = () => {
   clickSubmit.value = true;
-  loginByPhone(loginInfo.userPhone, loginInfo.userPassword).then((res: any) => {
+  registerUser(
+    registerInfo.userName,
+    registerInfo.userPhone,
+    registerInfo.userPassword
+  ).then((res: any) => {
     if (res.data.code === 20000) {
-      console.log("登录成功", res);
+      console.log("注册成功", res);
       Toast.success({
-        message: "登录成功",
+        message: "注册成功",
         onClose() {
-          setToken(res.data.userId);
           clickSubmit.value = false;
           router.back();
         },
       });
     } else {
-      console.log("登陆失败", res);
+      console.log("注册失败", res);
       Toast.fail({
-        message: "登陆失败，请重试",
+        message: "注册失败，请重试",
         onClose() {
           clickSubmit.value = false;
         },
@@ -66,23 +64,37 @@ const onSubmit = () => {
   <van-form @submit="onSubmit">
     <van-cell-group inset>
       <van-field
-        v-model="loginInfo.userPhone"
+        v-model="registerInfo.userName"
+        name="userName"
+        placeholder="请输入至少六位的用户名"
+        maxlength="16"
+        class="px-0 py-2"
+        :rules="[{ required: true, message: '请填写用户名' }]"
+      >
+        <template #left-icon>
+          <van-icon name="friends" class="mr-3"></van-icon>
+        </template>
+      </van-field>
+      <van-field
+        v-model="registerInfo.userPhone"
         name="userPhone"
         placeholder="请输入手机号"
         maxlength="11"
         class="px-0 py-2"
+        :rules="[{ required: true, message: '请填写手机号' }]"
       >
         <template #left-icon>
           <van-icon name="phone" class="mr-3"></van-icon>
         </template>
       </van-field>
       <van-field
-        v-model="loginInfo.userPassword"
+        v-model="registerInfo.userPassword"
         type="password"
         name="userPassword"
-        placeholder="密码"
+        placeholder="请输入至少六位的密码"
         class="px-0 py-2"
         maxlength="16"
+        :rules="[{ required: true, message: '请填写密码' }]"
       >
         <template #left-icon>
           <van-icon name="lock" class="mr-3"></van-icon>
@@ -90,7 +102,7 @@ const onSubmit = () => {
       </van-field>
     </van-cell-group>
     <van-checkbox
-      v-model="loginInfo.agreementCheck"
+      v-model="registerInfo.agreementCheck"
       class="mx-1rem my-2 text-xs"
       checked-color="#15C8C2"
       icon-size="0.75rem"
@@ -110,11 +122,11 @@ const onSubmit = () => {
         type="default"
         @click="onSubmit"
         color="#2A2A34"
-        :disabled="!loginInfo.ableLogin || clickSubmit === true"
+        :disabled="!registerInfo.ableLogin || clickSubmit === true"
       >
-        <span v-if="!clickSubmit">登录</span>
+        <span v-if="!clickSubmit">注册</span>
         <span v-else
-          >登录中...&nbsp;&nbsp;<van-loading
+          >注册中...&nbsp;&nbsp;<van-loading
             type="spinner"
             class="inline"
             size="1rem"
@@ -125,8 +137,7 @@ const onSubmit = () => {
       class="text-xs mx-1rem mt-2 justify-between flex"
       style="color: #c7c7ce"
     >
-      <span class="flex" @click="onHandoffLogin">用户名登录</span>
-      <span class="flex" @click="router.push('/register')">注册账号</span>
+      <span class="flex" @click="router.push('/login')">用户登录</span>
     </div>
   </van-form>
 </template>

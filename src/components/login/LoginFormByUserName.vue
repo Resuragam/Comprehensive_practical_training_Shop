@@ -54,7 +54,6 @@ const onSubmit = () => {
       Toast.fail({
         message: "登陆失败，请重试",
         onClose() {
-          setToken(res.data.userId);
           clickSubmit.value = false;
         },
       });
@@ -81,7 +80,7 @@ const onSubmit = () => {
         v-model="loginInfo.userPassword"
         type="password"
         name="userPassword"
-        placeholder="密码"
+        placeholder="请输入密码"
         class="px-0 py-2"
         maxlength="16"
       >
