@@ -1,4 +1,5 @@
 <script lang='ts' setup name="loginFormByPhone">
+import { loginBrandByPhone } from "@/api/brand";
 import { loginByPhone } from "@/api/login";
 import { getToken, setToken } from "@/utils/cookies";
 import { Toast } from "vant";
@@ -20,7 +21,8 @@ const loginInfo: LoginInfo = reactive({
     if (
       loginInfo.userPhone.length > 10 &&
       loginInfo.userPassword.length > 5 &&
-      loginInfo.agreementCheck === true
+      loginInfo.agreementCheck === true &&
+      result.value !== ""
     )
       return true;
     else return false;
@@ -48,29 +50,57 @@ const onConfirm = (value: any) => {
 
 const onSubmit = () => {
   clickSubmit.value = true;
-  loginByPhone(loginInfo.userPhone, loginInfo.userPassword).then((res: any) => {
-    if (res.data.code === 20000) {
-      console.log("登录成功", res);
-      Toast.success({
-        message: "登录成功",
-        onClose() {
-          setToken(res.data.data.user.userId);
-          console.warn(getToken());
-          clickSubmit.value = false;
-          debugger;
-          router.back();
-        },
-      });
-    } else {
-      console.log("登陆失败", res);
-      Toast.fail({
-        message: "登陆失败，请重试",
-        onClose() {
-          clickSubmit.value = false;
-        },
-      });
-    }
-  });
+  if (result.value === "用户") {
+    loginByPhone(loginInfo.userPhone, loginInfo.userPassword).then(
+      (res: any) => {
+        if (res.data.code === 20000) {
+          console.log("登录成功", res);
+          Toast.success({
+            message: "登录成功",
+            onClose() {
+              setToken(res.data.data.user.userId);
+              console.warn(getToken());
+              clickSubmit.value = false;
+              router.back();
+            },
+          });
+        } else {
+          console.log("登陆失败", res);
+          Toast.fail({
+            message: "登陆失败，请重试",
+            onClose() {
+              clickSubmit.value = false;
+            },
+          });
+        }
+      }
+    );
+  } else {
+    loginBrandByPhone(loginInfo.userPhone, loginInfo.userPassword).then(
+      (res: any) => {
+        if (res.data.code === 20000) {
+          console.log("登录成功", res);
+          Toast.success({
+            message: "登录成功",
+            onClose() {
+              setToken(res.data.data.brand.brandId);
+              console.warn(getToken());
+              clickSubmit.value = false;
+              router.back();
+            },
+          });
+        } else {
+          console.log("登陆失败", res);
+          Toast.fail({
+            message: "登陆失败，请重试",
+            onClose() {
+              clickSubmit.value = false;
+            },
+          });
+        }
+      }
+    );
+  }
 };
 </script>
 
@@ -109,9 +139,9 @@ const onSubmit = () => {
         @click="showPicker = true"
         class="px-0 py-2"
       >
-      <template #left-icon>
-        <van-icon name="manager" class="mr-3"></van-icon>
-      </template>
+        <template #left-icon>
+          <van-icon name="manager" class="mr-3"></van-icon>
+        </template>
       </van-field>
       <van-popup v-model:show="showPicker" position="bottom">
         <van-picker

@@ -1,4 +1,5 @@
 <script lang='ts' setup name="loginFormByPhone">
+import { loginBrandByUserName } from "@/api/brand";
 import { loginByUserName } from "@/api/login";
 import { setToken } from "@/utils/cookies";
 import { Toast } from "vant";
@@ -20,7 +21,8 @@ const loginInfo: LoginInfo = reactive({
     if (
       loginInfo.userName.length > 5 &&
       loginInfo.userPassword.length > 5 &&
-      loginInfo.agreementCheck === true
+      loginInfo.agreementCheck === true &&
+      result.value !== ""
     )
       return true;
     else return false;
@@ -48,29 +50,55 @@ const onConfirm = (value: any) => {
 
 const onSubmit = () => {
   clickSubmit.value = true;
-  loginByUserName(loginInfo.userName, loginInfo.userPassword).then(
-    (res: any) => {
-      if (res.data.code === 20000) {
-        console.log("登录成功", res);
-        Toast.success({
-          message: "登录成功",
-          onClose() {
-            setToken(res.data.userId);
-            clickSubmit.value = false;
-            router.back();
-          },
-        });
-      } else {
-        console.log("登陆失败", res);
-        Toast.fail({
-          message: "登陆失败，请重试",
-          onClose() {
-            clickSubmit.value = false;
-          },
-        });
+  if (result.value === "用户") {
+    loginByUserName(loginInfo.userName, loginInfo.userPassword).then(
+      (res: any) => {
+        if (res.data.code === 20000) {
+          console.log("登录成功", res);
+          Toast.success({
+            message: "登录成功",
+            onClose() {
+              setToken(res.data.data.user.userId);
+              clickSubmit.value = false;
+              router.back();
+            },
+          });
+        } else {
+          console.log("登陆失败", res);
+          Toast.fail({
+            message: "登陆失败，请重试",
+            onClose() {
+              clickSubmit.value = false;
+            },
+          });
+        }
       }
-    }
-  );
+    );
+  } else {
+    loginBrandByUserName(loginInfo.userName, loginInfo.userPassword).then(
+      (res: any) => {
+        if (res.data.code === 20000) {
+          console.log("登录成功", res);
+          Toast.success({
+            message: "登录成功",
+            onClose() {
+              setToken(res.data.data.brand.brandId);
+              clickSubmit.value = false;
+              router.back();
+            },
+          });
+        } else {
+          console.log("登陆失败", res);
+          Toast.fail({
+            message: "登陆失败，请重试",
+            onClose() {
+              clickSubmit.value = false;
+            },
+          });
+        }
+      }
+    );
+  }
 };
 </script>
 

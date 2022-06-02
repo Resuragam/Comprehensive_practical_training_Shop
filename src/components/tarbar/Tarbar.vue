@@ -26,7 +26,7 @@ console.log('tarbar加载')
     <van-tabbar-item icon="shopping-cart" replace to="/shopcart" name="shopcart"
       >购物车</van-tabbar-item
     >
-    <van-tabbar-item icon="manager" @click="myClick" name="my"
+    <van-tabbar-item icon="manager" @click="myClick" name="my" replace to="/my"
       >我的</van-tabbar-item
     >
   </van-tabbar>
