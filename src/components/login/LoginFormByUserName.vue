@@ -35,30 +35,42 @@ const onHandoffLogin = () => {
   emit("handoffLogin");
 };
 
+const result = ref("");
+const showPicker = ref(false);
+const columns = ["用户", "商家"];
+
 let clickSubmit = ref(false);
+
+const onConfirm = (value: any) => {
+  result.value = value;
+  showPicker.value = false;
+};
+
 const onSubmit = () => {
   clickSubmit.value = true;
-  loginByUserName(loginInfo.userName, loginInfo.userPassword).then((res: any) => {
-    if (res.data.code === 20000) {
-      console.log("登录成功", res);
-      Toast.success({
-        message: "登录成功",
-        onClose() {
-          setToken(res.data.userId);
-          clickSubmit.value = false;
-          router.back();
-        },
-      });
-    } else {
-      console.log("登陆失败", res);
-      Toast.fail({
-        message: "登陆失败，请重试",
-        onClose() {
-          clickSubmit.value = false;
-        },
-      });
+  loginByUserName(loginInfo.userName, loginInfo.userPassword).then(
+    (res: any) => {
+      if (res.data.code === 20000) {
+        console.log("登录成功", res);
+        Toast.success({
+          message: "登录成功",
+          onClose() {
+            setToken(res.data.userId);
+            clickSubmit.value = false;
+            router.back();
+          },
+        });
+      } else {
+        console.log("登陆失败", res);
+        Toast.fail({
+          message: "登陆失败，请重试",
+          onClose() {
+            clickSubmit.value = false;
+          },
+        });
+      }
     }
-  });
+  );
 };
 </script>
 
@@ -88,6 +100,26 @@ const onSubmit = () => {
           <van-icon name="lock" class="mr-3"></van-icon>
         </template>
       </van-field>
+      <van-field
+        v-model="result"
+        is-link
+        readonly
+        name="picker"
+        placeholder="请选择身份"
+        @click="showPicker = true"
+        class="px-0 py-2"
+      >
+        <template #left-icon>
+          <van-icon name="manager" class="mr-3"></van-icon>
+        </template>
+      </van-field>
+      <van-popup v-model:show="showPicker" position="bottom">
+        <van-picker
+          :columns="columns"
+          @confirm="onConfirm"
+          @cancel="showPicker = false"
+        />
+      </van-popup>
     </van-cell-group>
     <van-checkbox
       v-model="loginInfo.agreementCheck"
@@ -126,7 +158,7 @@ const onSubmit = () => {
       style="color: #c7c7ce"
     >
       <span class="flex" @click="onHandoffLogin">密码登录</span>
-      <span class="flex">忘记密码</span>
+      <span class="flex" @click="router.push('/register')">注册账号</span>
     </div>
   </van-form>
 </template>

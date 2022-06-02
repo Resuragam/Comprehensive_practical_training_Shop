@@ -15,10 +15,10 @@ const handoffLogin = () => {
 </script>
 
 <template>
-  <div class="m-2">
-    <div>
+  <div class="m-2 mt-0">
+    <!-- <div>
       <van-icon name="cross" @click="router.back()"/>
-    </div>
+    </div> -->
     <div class="">
       <img
         src="@/static/img/login/illustrations.svg"

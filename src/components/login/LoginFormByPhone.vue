@@ -35,7 +35,17 @@ const onHandoffLogin = () => {
   emit("handoffLogin");
 };
 
+const result = ref("");
+const showPicker = ref(false);
+const columns = ["用户", "商家"];
+
 let clickSubmit = ref(false);
+
+const onConfirm = (value: any) => {
+  result.value = value;
+  showPicker.value = false;
+};
+
 const onSubmit = () => {
   clickSubmit.value = true;
   loginByPhone(loginInfo.userPhone, loginInfo.userPassword).then((res: any) => {
@@ -45,7 +55,7 @@ const onSubmit = () => {
         message: "登录成功",
         onClose() {
           setToken(res.data.data.user.userId);
-          console.warn(getToken())
+          console.warn(getToken());
           clickSubmit.value = false;
           debugger;
           router.back();
@@ -82,7 +92,7 @@ const onSubmit = () => {
         v-model="loginInfo.userPassword"
         type="password"
         name="userPassword"
-        placeholder="密码"
+        placeholder="请输入密码"
         class="px-0 py-2"
         maxlength="16"
       >
@@ -90,6 +100,26 @@ const onSubmit = () => {
           <van-icon name="lock" class="mr-3"></van-icon>
         </template>
       </van-field>
+      <van-field
+        v-model="result"
+        is-link
+        readonly
+        name="picker"
+        placeholder="请选择身份"
+        @click="showPicker = true"
+        class="px-0 py-2"
+      >
+      <template #left-icon>
+        <van-icon name="manager" class="mr-3"></van-icon>
+      </template>
+      </van-field>
+      <van-popup v-model:show="showPicker" position="bottom">
+        <van-picker
+          :columns="columns"
+          @confirm="onConfirm"
+          @cancel="showPicker = false"
+        />
+      </van-popup>
     </van-cell-group>
     <van-checkbox
       v-model="loginInfo.agreementCheck"
