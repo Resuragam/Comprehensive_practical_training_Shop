@@ -12,7 +12,7 @@ export function getGoodsByName(current: number, limit: number, productName: stri
 }
 
 // 根据类别号分页查询商品
-export function getGoodsByCategoryId(current: number, limit: number, categoryId: string) {
+export function getGoodsByCategoryId(current: number, limit: number, categoryId: number) {
     return request({
         method: "get",
         url: `infoservice/product/queryByCategroy/${current}/${limit}`,

@@ -1,28 +1,44 @@
 <script lang='ts' setup name="GoodsCard">
+import { reactive } from 'vue';
+
+interface GoodInfo {
+  productId: string;
+  brandId: string;
+  categoryId: number;
+  productName: string;
+  pic: string;
+  checkStatus: number;
+  status: number;
+  sale: number;
+  price: number;
+  detailDesc: string;
+  stock: number;
+  description: string;
+}
+
+const props = defineProps({
+  goodInfo:{
+    type:Object,
+    default:{}
+  }
+})
+
 </script>
 
 <template>
   <div class="p-2">
     <div
       class="bg-cover w-45vw h-30vh"
-      style="
-        background-image: url(https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png);
-      "
-    >
-      <!-- <img
-        src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-        alt=""
-        class=""
-      /> -->
-    </div>
+      :style="{backgroundImage: 'url(' + props.goodInfo.pic + ')'}"
+    ></div>
     <div class="text-xs my-1" style="color: #30323f">
-      卡片的标题 你既可以通过设置 header 来修改标题
+      {{props.goodInfo.productName}}
     </div>
     <div class="flex justify-between">
-      <span class="text-sm font-600 items-center">
-        <span class="text-xs">¥</span>100
+      <span class="text-sm font-600">
+        <span class="text-xs">¥</span>{{props.goodInfo.price}}
       </span>
-      <span class="text-xs flex" style="color: #80808a">7000人付款</span>
+      <span class="text-xs leading-5" style="color: #80808a">{{props.goodInfo.sale}}人付款</span>
     </div>
   </div>
 </template>

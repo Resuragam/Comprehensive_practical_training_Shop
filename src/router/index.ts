@@ -19,6 +19,14 @@ const router = createRouter({
                             path: '/home/goods',
                             name: "tabs",
                             component: () => import('@/components/home/Tabs.vue'),
+                            // redirect: '/home/goods/1',
+                            // children: [
+                            //     {
+                            //         path: '/home/goods/:id',
+                            //         name: "good",
+                            //         component: () => import('@/components/goods/Good.vue'),
+                            //     }
+                            // ]
                         }
                     ]
                 },
