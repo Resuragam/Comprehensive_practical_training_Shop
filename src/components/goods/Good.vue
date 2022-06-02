@@ -1,5 +1,5 @@
-<script lang='ts' setup>
-import GoodsCard from '@/components/home/GoodsCard.vue';
+<script lang='ts' setup name="good">
+import GoodsCard from '@/components/goods/GoodsCard.vue';
 const recommendGoods = [1,2,3,4,5,6,7,8,9,10]
 </script>
 

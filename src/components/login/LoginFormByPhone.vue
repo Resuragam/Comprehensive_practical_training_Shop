@@ -1,6 +1,6 @@
 <script lang='ts' setup name="loginFormByPhone">
 import { loginByPhone } from "@/api/login";
-import { setToken } from "@/utils/cookies";
+import { getToken, setToken } from "@/utils/cookies";
 import { Toast } from "vant";
 import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -44,8 +44,10 @@ const onSubmit = () => {
       Toast.success({
         message: "登录成功",
         onClose() {
-          setToken(res.data.userId);
+          setToken(res.data.data.user.userId);
+          console.warn(getToken())
           clickSubmit.value = false;
+          debugger;
           router.back();
         },
       });

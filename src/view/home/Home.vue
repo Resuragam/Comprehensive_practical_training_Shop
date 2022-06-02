@@ -1,14 +1,16 @@
 <script lang='ts' setup name="home">
+import search from "@/components/home/Search.vue";
 import { useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
-import navbar from "@/components/home/Navbar.vue";
 const route = useRoute();
-
-
-console.log(route.path);
 </script>
 
 <template>
-  <navbar></navbar>
-  <router-view></router-view>
+  <div style="background-iamge:url('../../static/img/home/navbar.jpg')">
+    <search></search>
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
+  </div>
 </template>

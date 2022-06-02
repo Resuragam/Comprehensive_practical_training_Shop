@@ -1,9 +1,21 @@
 <script lang='ts' setup>
+import { getToken } from "@/utils/cookies";
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
+const router = useRouter()
 const active = ref(route.path.split("/")[1]);
 
+const myClick = ()=>{
+  const token = getToken()
+  console.warn(token)
+  if(token === undefined){
+    router.push('/login')
+  }else{
+    router.push('/my')
+  }
+}
+console.log('tarbar加载')
 </script>
 
 <template>
@@ -14,7 +26,7 @@ const active = ref(route.path.split("/")[1]);
     <van-tabbar-item icon="shopping-cart" replace to="/shopcart" name="shopcart"
       >购物车</van-tabbar-item
     >
-    <van-tabbar-item icon="manager" replace to="/my" name="my"
+    <van-tabbar-item icon="manager" @click="myClick" name="my"
       >我的</van-tabbar-item
     >
   </van-tabbar>
