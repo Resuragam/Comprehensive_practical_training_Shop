@@ -1,6 +1,6 @@
 <script lang='ts' setup name="GoodsCard">
 import { reactive } from 'vue';
-
+import {useRouter} from 'vue-router'
 interface GoodInfo {
   productId: string;
   brandId: string;
@@ -23,10 +23,12 @@ const props = defineProps({
   }
 })
 
+const router = useRouter()
+
 </script>
 
 <template>
-  <div class="p-2">
+  <div class="p-2" @click="">
     <div
       class="bg-cover w-45vw h-30vh"
       :style="{backgroundImage: 'url(' + props.goodInfo.pic + ')'}"
