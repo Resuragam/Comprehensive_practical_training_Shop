@@ -35,3 +35,14 @@ export function getUserCheckAttend(userId: string,productId:string) {
     })
 }
 
+// 用户关注或取消关注商家，传入用户id和商品id
+export function userAttendProduct(userId: string,productId:string) {
+    return request({
+        method: "post",
+        url: "/infoservice/collect/attentionProduct",
+        params: {
+            userId,
+            productId,
+        }
+    })
+}

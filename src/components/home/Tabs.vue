@@ -16,7 +16,8 @@ let categoryList: Array<CategoryItem> = reactive([]);
 
 onMounted(() => {
   selectAll().then((res: any) => {
-    res.data.data.list.forEach((element: any) => {
+    console.warn(res)
+    res.data.list.forEach((element: any) => {
       categoryList.push(element);
     });
     console.warn(categoryList);

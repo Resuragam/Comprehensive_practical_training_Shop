@@ -22,4 +22,11 @@ export function getGoodsByCategoryId(current: number, limit: number, categoryId:
     })
 }
 
-// 
+// 详细描述：根据商品id 查询商品信息
+export function getGoodsByGoodId(productId: string) {
+    return request({
+        method: "get",
+        url: `/infoservice/product/queryById/${productId}`,
+    })
+    
+}

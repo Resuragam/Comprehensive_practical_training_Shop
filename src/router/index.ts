@@ -11,7 +11,8 @@ const router = createRouter({
             children: [
                 {
                     path: '/index',
-                    component: import('@/layouts/defaulte.vue'),
+                    name:'defaulte',
+                    component: () => import('@/layouts/defaulte.vue'),
                     redirect: '/home',
                     children: [
                         {
@@ -24,14 +25,6 @@ const router = createRouter({
                                     path: '/home/goods',
                                     name: "tabs",
                                     component: () => import('@/components/home/Tabs.vue'),
-                                    // redirect: '/home/goods/1',
-                                    // children: [
-                                    //     {
-                                    //         path: '/home/goods/:id',
-                                    //         name: "good",
-                                    //         component: () => import('@/components/goods/Good.vue'),
-                                    //     }
-                                    // ]
                                 }
                             ]
                         },
@@ -46,6 +39,14 @@ const router = createRouter({
                             component: () => import('@/view/my/my.vue'),
                         },
                     ]
+                },
+                {
+                    path: '/good',
+                    name: "goodInfo",
+                    component: () => import('@/view/goods/Index.vue'),
+                    meta: {
+                        keepAlive: false //需要被缓存
+                    }
                 },
                 {
                     path: '/login',

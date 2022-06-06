@@ -1,6 +1,7 @@
 <script lang='ts' setup name="loginFormByPhone">
 import { loginBrandByPhone } from "@/api/brand";
 import { loginByPhone } from "@/api/login";
+import store from "@/store";
 import { getToken, setToken } from "@/utils/cookies";
 import { Toast } from "vant";
 import { computed, reactive, ref } from "vue";
@@ -53,12 +54,16 @@ const onSubmit = () => {
   if (result.value === "用户") {
     loginByPhone(loginInfo.userPhone, loginInfo.userPassword).then(
       (res: any) => {
-        if (res.data.code === 20000) {
+        if (res.code === 20000) {
           console.log("登录成功", res);
           Toast.success({
             message: "登录成功",
             onClose() {
-              setToken(res.data.data.user.userId);
+              setToken(res.data.token);
+              store.commit('SET_USERNAME', res.data.user.userName);
+              store.commit('SET_AVATAR', res.data.user.avatar);
+              store.commit('SET_USERID', res.data.user.userId);
+              store.commit('SET_PHONE', res.data.user.phone);
               console.warn(getToken());
               clickSubmit.value = false;
               router.back();
@@ -78,12 +83,12 @@ const onSubmit = () => {
   } else {
     loginBrandByPhone(loginInfo.userPhone, loginInfo.userPassword).then(
       (res: any) => {
-        if (res.data.code === 20000) {
+        if (res.code === 20000) {
           console.log("登录成功", res);
           Toast.success({
             message: "登录成功",
             onClose() {
-              setToken(res.data.data.brand.brandId);
+              setToken(res.data.brand.brandId);
               console.warn(getToken());
               clickSubmit.value = false;
               router.back();

@@ -1,8 +1,12 @@
-<script lang='ts' setup>
+<script lang='ts' setup name="defaulte">
 import tarbar from "@/components/tarbar/Tarbar.vue";
 </script>
-
-<template name="layout">
+<!-- <script>
+export default {
+  name:'default'
+}
+</script> -->
+<template>
   <router-view v-slot="{ Component }">
     <keep-alive>
       <component :is="Component"/>

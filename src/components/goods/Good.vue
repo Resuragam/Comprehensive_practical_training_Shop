@@ -59,15 +59,15 @@ const onLoad = () => {
     ).then((res: any) => {
       console.warn("成功拿到数据");
       console.log(res.data.data);
-      if (res.data.code === 20000) {
-        res.data.data.rows.forEach((item: any) => {
+      if (res.code === 20000) {
+        res.data.rows.forEach((item: any) => {
           goodsData.list.push(item);
         });
         // 加载状态结束
         loading.value = false;
         current.value = current.value + 1;
         // 数据全部加载完成
-        if (res.data.data.rows.length < limit.value) {
+        if (res.data.rows.length < limit.value) {
           finished.value = true;
           console.warn(goodsData.list);
         }

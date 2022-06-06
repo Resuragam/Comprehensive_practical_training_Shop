@@ -53,12 +53,12 @@ const onSubmit = () => {
   if (result.value === "用户") {
     loginByUserName(loginInfo.userName, loginInfo.userPassword).then(
       (res: any) => {
-        if (res.data.code === 20000) {
+        if (res.code === 20000) {
           console.log("登录成功", res);
           Toast.success({
             message: "登录成功",
             onClose() {
-              setToken(res.data.data.user.userId);
+              setToken(res.data.user.userId);
               clickSubmit.value = false;
               router.back();
             },
@@ -77,12 +77,12 @@ const onSubmit = () => {
   } else {
     loginBrandByUserName(loginInfo.userName, loginInfo.userPassword).then(
       (res: any) => {
-        if (res.data.code === 20000) {
+        if (res.code === 20000) {
           console.log("登录成功", res);
           Toast.success({
             message: "登录成功",
             onClose() {
-              setToken(res.data.data.brand.brandId);
+              setToken(res.data.brand.brandId);
               clickSubmit.value = false;
               router.back();
             },
