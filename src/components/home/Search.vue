@@ -1,7 +1,16 @@
 <script lang='ts' setup name="search">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter()
 const value = ref("");
-const onSearch = () => {};
+const onSearch = () => { 
+  router.push({
+    path: "/search",
+    params: {
+      storeName:value.value
+    }
+  })
+};
 </script>
 <template>
   <div>

@@ -11,7 +11,7 @@ const router = createRouter({
             children: [
                 {
                     path: '/index',
-                    name:'defaulte',
+                    name: 'defaulte',
                     component: () => import('@/layouts/defaulte.vue'),
                     redirect: '/home',
                     children: [
@@ -39,6 +39,16 @@ const router = createRouter({
                             component: () => import('@/view/my/my.vue'),
                         },
                     ]
+                },
+                {
+                    path: '/setting',
+                    name: 'setting',
+                    component: () => import('@/view/setting/index.vue'),
+                },
+                {
+                    path: '/search',
+                    name: 'search',
+                    component: () => import('@/view/search/index.vue'),
                 },
                 {
                     path: '/good',

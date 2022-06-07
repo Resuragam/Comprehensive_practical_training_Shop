@@ -1,27 +1,11 @@
-import { createStore } from "vuex";
-import getters from '@/store/getter'
+import { createStore, mapMutations } from "vuex";
+import brand from "./modules/brand";
+import user from './modules/user'
 const store = createStore({
-    state: {
-        userId: "",
-        phone: "",
-        userName: '',
-        avatar: '',
+    modules: {
+        brand,
+        user
     },
-    mutations: {
-        SET_USERNAME: (state, userName) => {
-            state.userName = userName
-        },
-        SET_AVATAR: (state, avatar) => {
-            state.avatar = avatar
-        },
-        SET_USERID: (state, userId) => {
-            state.userId = userId
-        },
-        SET_PHONE: (state, phone) => {
-            state.phone = phone
-        },
-    },
-    getters
 })
 
 export default store

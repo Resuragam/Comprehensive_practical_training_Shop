@@ -1,12 +1,13 @@
 <script lang='ts' setup name="loginFormByPhone">
 import { loginBrandByPhone } from "@/api/brand";
 import { loginByPhone } from "@/api/login";
-import store from "@/store";
+import { useStore } from "vuex";
 import { getToken, setToken } from "@/utils/cookies";
 import { Toast } from "vant";
 import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
+const store = useStore();
 interface LoginInfo {
   userPhone: string;
   userPassword: string;
@@ -60,13 +61,15 @@ const onSubmit = () => {
             message: "登录成功",
             onClose() {
               setToken(res.data.token);
-              store.commit('SET_USERNAME', res.data.user.userName);
-              store.commit('SET_AVATAR', res.data.user.avatar);
-              store.commit('SET_USERID', res.data.user.userId);
-              store.commit('SET_PHONE', res.data.user.phone);
+              store.commit("SET_USER_USERNAME", res.data.user.username);
+              store.commit("SET_USER_AVATAR", res.data.user.avatar);
+              store.commit("SET_USER_USERID", res.data.user.userId);
+              store.commit("SET_USER_PHONE", res.data.user.phone);
+              console.warn(store.state.user);
+              console.warn(store);
               console.warn(getToken());
               clickSubmit.value = false;
-              router.back();
+              router.push("/home");
             },
           });
         } else {
@@ -89,9 +92,17 @@ const onSubmit = () => {
             message: "登录成功",
             onClose() {
               setToken(res.data.brand.brandId);
+              store.commit(
+                "brand/SET_BRAND_STORENAME",
+                res.data.brand.sroteName
+              );
+              store.commit("brand/SET_BRAND_AVATAR", res.data.brand.avatar);
+              store.commit("brand/SET_BRAND_BRANDID", res.data.brand.brandId);
+              store.commit("brand/SET_BRAND_PHONE", res.data.brand.phone);
+              console.warn(store);
               console.warn(getToken());
               clickSubmit.value = false;
-              router.back();
+              router.push("/home");
             },
           });
         } else {

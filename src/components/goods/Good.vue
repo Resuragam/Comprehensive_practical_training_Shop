@@ -58,7 +58,7 @@ const onLoad = () => {
       Number(props.categoryId)
     ).then((res: any) => {
       console.warn("成功拿到数据");
-      console.log(res.data.data);
+      console.log(res.data);
       if (res.code === 20000) {
         res.data.rows.forEach((item: any) => {
           goodsData.list.push(item);

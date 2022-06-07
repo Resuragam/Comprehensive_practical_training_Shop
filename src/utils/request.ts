@@ -24,7 +24,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response) => {
         const res = response.data
-        if (res.code === 20001) {
+        if (res.message ==='未登录！') {
             Toast.fail({    
                 message: '登录状态错误',
                 position: 'top',

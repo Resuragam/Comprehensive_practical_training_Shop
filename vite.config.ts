@@ -19,5 +19,14 @@ export default defineConfig({
     styleImport({
       resolves: [VantResolve()],
     }),
-  ]
+  ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://101.43.184.159:8005/api',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+    }
+  }
 })

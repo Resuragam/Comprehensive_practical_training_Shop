@@ -1,10 +1,11 @@
 <script lang='ts' setup name="goodInfo">
 import { getGoodsByGoodId } from "@/api/goods";
-import store from "@/store";
+import { useStore } from 'vuex'
 import { onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import actionBar  from "@/components/goods/ActionBar.vue";
+import actionBar from "@/components/goods/ActionBar.vue";
 
+const store = useStore()
 const route = useRoute();
 const router = useRouter();
 const productId = String(route.query.productId);
@@ -59,7 +60,8 @@ onMounted(() => {
     goodsData.sale = res.data.product.sale;
     goodsData.stock = res.data.product.stock;
     console.log(goodsData);
-    console.warn('userid:',store.state.userId)
+    console.warn('userId:', store.state.user)
+    console.warn(store)
     loading.value = false;
   });
 });
