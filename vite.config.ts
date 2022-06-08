@@ -21,9 +21,11 @@ export default defineConfig({
     }),
   ],
   server: {
+    open: true,
+    port: 3000,
     proxy: {
       '/api': {
-        target: 'http://101.43.184.159:8005/api',
+        target: 'http://101.43.184.159:8005',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, '')
       },

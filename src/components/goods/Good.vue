@@ -36,20 +36,7 @@ const loading = ref(false);
 const finished = ref(false);
 let current = ref(1);
 const limit = ref(4);
-// onMounted(() => {
-//   getGoodsByCategoryId(1, 4, Number(props.categoryId)).then((res: any) => {
-//     console.warn("成功拿到数据");
-//     console.log(res.data.data);
-//     if (res.data.code === 20000) {
-//       res.data.data.rows.forEach((item: any) => {
-//         goodsData.list.push(item);
-//       });
-//     }
-//   });
-// });
 const onLoad = () => {
-  // 异步更新数据
-  // setTimeout 仅做示例，真实场景中一般为 ajax 请求
   console.warn("发送请求");
   setTimeout(() => {
     getGoodsByCategoryId(

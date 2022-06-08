@@ -4,14 +4,16 @@ import { getToken } from './cookies'
 
 // 创建axios实例
 const service = axios.create({
-    baseURL: "http://101.43.184.159:8005",
+    baseURL:'/api',
     timeout: 10000,
 })
 
 // 请求拦截器
 service.interceptors.request.use(
     (config: any) => {
-        const token = getToken()
+        const token = sessionStorage.getItem('token')
+        console.warn(typeof token)
+        console.warn(token)
         if (token)
             config.headers.Authorization = token
         return config

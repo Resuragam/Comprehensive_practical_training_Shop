@@ -30,6 +30,7 @@ const toGood = () => {
     path: "/good",
     query: {
       productId: props.goodInfo.productId,
+      brandId:props.goodInfo.brandId
     },
   });
 };

@@ -7,9 +7,9 @@ const router = useRouter()
 const active = ref(route.path.split("/")[1]);
 
 const myClick = ()=>{
-  const token = getToken()
+  const token = sessionStorage.getItem('token')
   console.warn(token)
-  if(token === undefined){
+  if(token === null){
     router.push('/login')
   }else{
     router.push('/my')

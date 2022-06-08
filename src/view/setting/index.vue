@@ -7,7 +7,7 @@ const router = useRouter()
 
 <template>
   <div class="h-screen p-2" style="background-color: #fafafa">
-    <div class="text-left mb-2 ">
+    <div class="text-left ">
       <van-icon
         name="arrow-left"
         size="1rem"

@@ -46,6 +46,11 @@ const router = createRouter({
                     component: () => import('@/view/setting/index.vue'),
                 },
                 {
+                    path: '/favorite',
+                    name: 'favorite',
+                    component: () => import('@/view/favorite/index.vue'),
+                },
+                {
                     path: '/search',
                     name: 'search',
                     component: () => import('@/view/search/index.vue'),
@@ -54,6 +59,14 @@ const router = createRouter({
                     path: '/good',
                     name: "goodInfo",
                     component: () => import('@/view/goods/Index.vue'),
+                    meta: {
+                        keepAlive: false //需要被缓存
+                    }
+                },
+                {
+                    path: '/brand',
+                    name: "brand",
+                    component: () => import('@/view/brand/index.vue'),
                     meta: {
                         keepAlive: false //需要被缓存
                     }

@@ -1,7 +1,9 @@
 <script lang='ts' setup name="brand">
 import { reactive, ref } from "vue";
+import { useRoute } from "vue-router";
 import { searchBrand } from "../../api/search";
 const list = ref([]);
+const route = useRoute()
 interface BrandInfo {
   brandId: string;
   sroteName: string;
@@ -16,7 +18,11 @@ const props = defineProps({
     type: String,
   },
 });
+
+const question = ref()
+
 const onLoad = () => {
+    
     searchBrand(String(props.storeName), 1, 100).then((res: any) => {
       console.warn(res)
   });

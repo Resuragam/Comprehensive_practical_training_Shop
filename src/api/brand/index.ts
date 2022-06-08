@@ -23,3 +23,11 @@ export function loginBrandByUserName(name: string, password: string) {
         }
     })
 }
+
+// 详细描述：根据商家id查询所有已上架商品
+export function getBrandAllProducts(brandId: string, current: number, limit: number) {
+    return request({
+        method: "get",
+        url: `/infoservice/product/queryByBrandId/${brandId}/${current}/${limit}`,
+    })
+}

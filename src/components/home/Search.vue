@@ -6,8 +6,8 @@ const value = ref("");
 const onSearch = () => { 
   router.push({
     path: "/search",
-    params: {
-      storeName:value.value
+    query: {
+      question:value.value
     }
   })
 };

@@ -1,5 +1,9 @@
 <script lang='ts' setup name="tools">
-
+import { useRouter } from "vue-router";
+const router = useRouter()
+const toFavorite = () => {
+    
+}
 </script>
 
 <template>
@@ -14,7 +18,7 @@
               <span class="flex items-center"><van-icon name="arrow" color="#B6B5BF"/></span>
           </div>
       </div>
-      <div class="flex justify-between p-2">
+      <!-- <div class="flex justify-between p-2">
           <div class="flex text-sm font-semibold">
               <span class="mr-1"><van-icon name="send-gift-o" size="1rem" color="#000000" class="font-semibold"/></span>
               <span class="flex items-center text-sm">我有</span>
@@ -23,8 +27,8 @@
               <span class="flex items-center"  style="color:#B6B5BF">9</span>
               <span class="flex items-center"><van-icon name="arrow" color="#B6B5BF"/></span>
           </div>
-      </div>
-      <div class="flex justify-between p-2">
+      </div> -->
+      <!-- <div class="flex justify-between p-2">
           <div class="flex text-sm font-semibold">
               <span class="mr-1"><van-icon name="underway-o" size="1rem" color="#000000" class="font-semibold"/></span>
               <span class="flex items-center text-sm">足迹</span>
@@ -33,7 +37,7 @@
               <span class="flex items-center"  style="color:#B6B5BF">2</span>
               <span class="flex items-center"><van-icon name="arrow" color="#B6B5BF"/></span>
           </div>
-      </div>
+      </div> -->
       <div class="flex justify-between p-2">
           <div class="flex text-sm font-semibold">
               <span class="mr-1"><van-icon name="shop-collect-o" size="1rem" color="#000000" class="font-semibold"/></span>

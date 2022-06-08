@@ -60,7 +60,7 @@ onMounted(() => {
     goodsData.sale = res.data.product.sale;
     goodsData.stock = res.data.product.stock;
     console.log(goodsData);
-    console.warn('userId:', store.state.user)
+    console.warn('userId:', store.state.user.userId)
     console.warn(store)
     loading.value = false;
   });
@@ -104,6 +104,6 @@ export default {
       <img :src="goodsData.description" alt="">
     </div>
     <div class="h-50px"></div>
-    <actionBar></actionBar>
+    <actionBar :goodInfo="goodsData"></actionBar>
   </div>
 </template>

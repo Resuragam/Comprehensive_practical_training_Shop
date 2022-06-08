@@ -2,7 +2,7 @@
 import { loginBrandByPhone } from "@/api/brand";
 import { loginByPhone } from "@/api/login";
 import { useStore } from "vuex";
-import { getToken, setToken } from "@/utils/cookies";
+import { getToken,setToken} from "@/utils/cookies";
 import { Toast } from "vant";
 import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -60,7 +60,7 @@ const onSubmit = () => {
           Toast.success({
             message: "登录成功",
             onClose() {
-              setToken(res.data.token);
+              sessionStorage.setItem('token',res.data.token);
               store.commit("SET_USER_USERNAME", res.data.user.username);
               store.commit("SET_USER_AVATAR", res.data.user.avatar);
               store.commit("SET_USER_USERID", res.data.user.userId);
@@ -91,7 +91,7 @@ const onSubmit = () => {
           Toast.success({
             message: "登录成功",
             onClose() {
-              setToken(res.data.brand.brandId);
+              sessionStorage.setItem('token',res.data.token);
               store.commit(
                 "brand/SET_BRAND_STORENAME",
                 res.data.brand.sroteName
