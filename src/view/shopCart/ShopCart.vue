@@ -1,5 +1,6 @@
 <script lang='ts' setup name="shopcart">
 import { deleteCartProducts, getUserCartProducts } from "@/api/shopcart";
+import { Toast } from "vant";
 import {
   computed,
   onActivated,
@@ -27,14 +28,23 @@ let checked = ref([]);
 let shopCartData: Array<ShopCartInfo> = reactive([]);
 
 const deleteProduct = (index: number, productId: string) => {
-  checked.value.forEach((item,checkindex) => {
+  checked.value.forEach((item, checkindex) => {
     if (item.productId === productId) {
-      checked.value.splice(checkindex,1)
+      checked.value.splice(checkindex, 1);
     }
-  })
+  });
   deleteCartProducts(productId).then((res: any) => {
     if (res.code === 20000) {
-      shopCartData.splice(index, 1);
+      Toast.success({
+        message: "删除成功",
+        onClose() {
+          shopCartData.splice(index, 1);
+        },
+      });
+    } else {
+      Toast.fail({
+        message: "请重试",
+      });
     }
   });
 };
@@ -56,40 +66,41 @@ onActivated(() => {
 const price = computed(() => {
   let sum = 0;
   checked.value.forEach((item: any) => {
-    sum = sum + Number(item.price)*100*Number(item.quantity)
-  })
+    sum = sum + Number(item.price) * 100 * Number(item.quantity);
+  });
   return sum;
 });
 
 onDeactivated(() => {
   loading.value = true;
   // sessionStorage.setItem('checked',checked.value)
-  checked.value.length = 0
+  checked.value.length = 0;
 });
 
 const ischecked = computed(() => {
-  if (checked.value.length === shopCartData.length && shopCartData.length != 0) {
-    return true
+  if (
+    checked.value.length === shopCartData.length &&
+    shopCartData.length != 0
+  ) {
+    return true;
   } else {
-    return false
+    return false;
   }
-})
+});
 
 console.warn(checked);
 const checkAll = () => {
   if (ischecked.value == false) {
-    checked.value.length = 0
-    shopCartData.forEach((item:any) => {
-      checked.value.push(item)
-    })
+    checked.value.length = 0;
+    shopCartData.forEach((item: any) => {
+      checked.value.push(item);
+    });
   } else {
-    checked.value.length = 0
+    checked.value.length = 0;
   }
 };
 
-const onSubmit = () => {
-  
-}
+const onSubmit = () => {};
 </script>
 
 <template>
@@ -122,7 +133,7 @@ const onSubmit = () => {
             <template #right>
               <van-button
                 square
-                type="danger"
+                color="#d4d4d4"
                 text="删除"
                 class="h-full w-10"
                 @click="deleteProduct(index, item.productId)"

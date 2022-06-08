@@ -5,6 +5,7 @@ import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { addToCart } from "@/api/shopcart";
+import { Toast } from "vant";
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
@@ -53,14 +54,28 @@ onMounted(() => {
 });
 
 const getstart = () => {
-  userAttendProduct(userId.value, String(productId.value)).then((res:any) => {
+  userAttendProduct(userId.value, String(productId.value)).then((res: any) => {
     console.warn(res);
     if (res.code === 20000) {
       if (res.message === "收藏成功") {
-        star.value = true;
+        Toast.success({
+          message: "收藏成功",
+          onClose() {
+            star.value = true;
+          },
+        });
       } else {
-        star.value = false;
+        Toast.success({
+          message: "取消收藏",
+          onClose() {
+            star.value = false;
+          },
+        });
       }
+    } else {
+      Toast.fail({
+        message: "请重试",
+      });
     }
   });
 };
@@ -95,9 +110,18 @@ const addShopcart = () => {
     pic,
     productName,
     price,
-    String(quantity),
+    String(quantity)
   ).then((res: any) => {
     console.warn("添加购物车", res);
+    if (res.code === 20000) {
+      Toast.success({
+        message: "成功加入购物车",
+      });
+    } else {
+      Toast.fail({
+        message: "加入失败，请重试",
+      });
+    }
   });
 };
 </script>

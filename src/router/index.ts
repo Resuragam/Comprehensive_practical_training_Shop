@@ -72,6 +72,14 @@ const router = createRouter({
                     }
                 },
                 {
+                    path: '/subscribe',
+                    name: "subscribe",
+                    component: () => import('@/view/subscribe/index.vue'),
+                    meta: {
+                        keepAlive: false //需要被缓存
+                    }
+                },
+                {
                     path: '/login',
                     name: "login",
                     component: () => import('@/view/login/Login.vue'),

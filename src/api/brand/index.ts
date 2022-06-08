@@ -31,3 +31,12 @@ export function getBrandAllProducts(brandId: string, current: number, limit: num
         url: `/infoservice/product/queryByBrandId/${brandId}/${current}/${limit}`,
     })
 }
+
+// 详细描述：根据商家id查询商家信息
+export function getBrandInfo(brandId: string) {
+    return request({
+        method: "get",
+        url: `/infoservice/brand/queryById/${brandId}`,
+    })
+}
+
