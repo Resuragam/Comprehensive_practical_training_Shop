@@ -2,12 +2,12 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter()
-const value = ref("");
+const searchvalue = ref("nike");
 const onSearch = () => { 
   router.push({
     path: "/search",
     query: {
-      question:value.value
+      question:searchvalue.value===''?'nike':searchvalue.value
     }
   })
 };
@@ -16,7 +16,7 @@ const onSearch = () => {
   <div>
     <div>
       <van-search
-        v-model="value"
+        v-model="searchvalue"
         show-action
         placeholder="请输入搜索关键词"
         @search="onSearch"

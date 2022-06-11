@@ -99,6 +99,7 @@ const toShopCart = () => {
 
 // 添加购物车
 const addShopcart = () => {
+  console.warn('props.goodInfo',props.goodInfo)
   const pic = props.goodInfo.pic;
   const productName = props.goodInfo.productName;
   const price = props.goodInfo.price;
@@ -107,6 +108,7 @@ const addShopcart = () => {
   addToCart(
     productId.value,
     userId.value,
+    brandId.value,
     pic,
     productName,
     price,

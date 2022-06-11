@@ -60,7 +60,8 @@ const onSubmit = () => {
           Toast.success({
             message: "登录成功",
             onClose() {
-              sessionStorage.setItem('token',res.data.token);
+              sessionStorage.setItem('token', res.data.token);
+              store.commit("SET_IDENTITY", 1);
               store.commit("SET_USER_USERNAME", res.data.user.username);
               store.commit("SET_USER_AVATAR", res.data.user.avatar);
               store.commit("SET_USER_USERID", res.data.user.userId);
@@ -91,14 +92,12 @@ const onSubmit = () => {
           Toast.success({
             message: "登录成功",
             onClose() {
-              sessionStorage.setItem('token',res.data.token);
-              store.commit(
-                "brand/SET_BRAND_STORENAME",
-                res.data.brand.sroteName
-              );
-              store.commit("brand/SET_BRAND_AVATAR", res.data.brand.avatar);
-              store.commit("brand/SET_BRAND_BRANDID", res.data.brand.brandId);
-              store.commit("brand/SET_BRAND_PHONE", res.data.brand.phone);
+              sessionStorage.setItem('token', res.data.token);
+              store.commit("SET_IDENTITY", 0);
+              store.commit("SET_USER_USERNAME", res.data.brand.sroteName);
+              store.commit("SET_USER_AVATAR", res.data.brand.avatar);
+              store.commit("SET_USER_USERID", res.data.brand.brandId);
+              store.commit("SET_USER_PHONE", res.data.brand.phone);
               console.warn(store);
               console.warn(getToken());
               clickSubmit.value = false;

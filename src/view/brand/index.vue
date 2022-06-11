@@ -149,17 +149,27 @@ const attendBrand = () => {
         <div class="flex"><img :src="brandInfo.avatar" alt="" /></div>
         <div class="pl-5">
           <div>{{ brandInfo.sroteName }}</div>
-          <van-tag
-            :type="brandInfo.attend ? 'success' : 'default'"
-            size="medium"
-            >{{ brandInfo.tagText }}</van-tag
-          >
+          <van-tag v-if="brandInfo.attend" type="success" size="medium">{{
+            brandInfo.tagText
+          }}</van-tag>
+          <van-tag v-else type="default" size="medium">{{
+            brandInfo.tagText
+          }}</van-tag>
         </div>
       </div>
       <template #right>
         <van-button
+          v-if="brandInfo.attend"
           square
-          :type="brandInfo.attend ? '' : 'primary'"
+          class="h-full"
+          @click="attendBrand()"
+        >
+          {{ brandInfo.attend ? "取消订阅" : "订阅" }}
+        </van-button>
+        <van-button
+          v-else
+          square
+          type="primary"
           class="h-full"
           @click="attendBrand()"
         >

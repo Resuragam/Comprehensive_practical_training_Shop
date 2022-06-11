@@ -1,5 +1,5 @@
 <script lang='ts' setup name="registerForm">
-import { registerUser } from "@/api/register";
+import { registerBrand, registerUser } from "@/api/register";
 import { Toast } from "vant";
 import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -28,35 +28,69 @@ const registerInfo: RegisterInfo = reactive({
     else return false;
   }),
 });
-
+const result = ref("");
+const showPicker = ref(false);
+const columns = ["用户", "商家"];
 const router = useRouter();
 const clickSubmit = ref(false);
 const onSubmit = () => {
   clickSubmit.value = true;
-  registerUser(
-    registerInfo.userName,
-    registerInfo.userPhone,
-    registerInfo.userPassword
-  ).then((res: any) => {
-    if (res.data.code === 20000) {
-      console.log("注册成功", res);
-      Toast.success({
-        message: "注册成功",
-        onClose() {
-          clickSubmit.value = false;
-          router.back();
-        },
-      });
-    } else {
-      console.log("注册失败", res);
-      Toast.fail({
-        message: "注册失败，请重试",
-        onClose() {
-          clickSubmit.value = false;
-        },
-      });
-    }
-  });
+  if (result.value === "用户") {
+    registerUser(
+      registerInfo.userName,
+      registerInfo.userPhone,
+      registerInfo.userPassword
+    ).then((res: any) => {
+      if (res.code === 20000) {
+        console.log("注册成功", res);
+        Toast.success({
+          message: "注册成功",
+          onClose() {
+            clickSubmit.value = false;
+            router.back();
+          },
+        });
+      } else {
+        console.log("注册失败", res);
+        Toast.fail({
+          message: "注册失败，请重试",
+          onClose() {
+            clickSubmit.value = false;
+          },
+        });
+      }
+    });
+  } else {
+    registerBrand(
+      registerInfo.userName,
+      registerInfo.userPhone,
+      registerInfo.userPassword
+    ).then((res: any) => {
+      if (res.code === 20000) {
+        console.log("注册成功", res);
+        Toast.success({
+          message: "注册成功",
+          onClose() {
+            clickSubmit.value = false;
+            router.back();
+          },
+        });
+      } else {
+        console.log("注册失败", res);
+        Toast.fail({
+          message: "注册失败，请重试",
+          onClose() {
+            clickSubmit.value = false;
+          },
+        });
+      }
+    });
+  }
+};
+
+const onConfirm = (value: any) => {
+  result.value = value;
+  showPicker.value = false;
 };
 </script>
 
@@ -100,6 +134,26 @@ const onSubmit = () => {
           <van-icon name="lock" class="mr-3"></van-icon>
         </template>
       </van-field>
+      <van-field
+        v-model="result"
+        is-link
+        readonly
+        name="picker"
+        placeholder="请选择身份"
+        @click="showPicker = true"
+        class="px-0 py-2"
+      >
+        <template #left-icon>
+          <van-icon name="manager" class="mr-3"></van-icon>
+        </template>
+      </van-field>
+      <van-popup v-model:show="showPicker" position="bottom">
+        <van-picker
+          :columns="columns"
+          @confirm="onConfirm"
+          @cancel="showPicker = false"
+        />
+      </van-popup>
     </van-cell-group>
     <van-checkbox
       v-model="registerInfo.agreementCheck"

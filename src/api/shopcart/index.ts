@@ -2,12 +2,12 @@ import request from "@/utils/request";
 import { StringifyOptions } from "querystring";
 
 // 添加商品到购物车
-export function addToCart(productId: string, userId: string, pic: string, productName: string, price: string, quantity: string) {
+export function addToCart(productId: string, userId: string, brandId: string, pic: string, productName: string, price: string, quantity: string) {
     return request({
         method: "post",
         url: '/infoservice/cartItem/addToCart',
         data: {
-            productId, userId, pic, productName, price, quantity
+            productId, userId, brandId, pic, productName, price, quantity
         }
     })
 }

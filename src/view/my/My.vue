@@ -2,15 +2,64 @@
 import userInfo from "@/components/my/UserInfo.vue";
 import tools from "@/components/my/tools.vue";
 import { useRouter } from "vue-router";
-const router = useRouter()
+import { Toast } from "vant";
+import { useStore } from "vuex";
+const router = useRouter();
+const store = useStore();
+const toBrand = () => {
+  const identity = sessionStorage.getItem("identity");
+  console.warn(identity);
+  console.warn(typeof identity);
+  if (Number(identity)===1) {
+    console.warn(store);
+    Toast.fail({
+      message: "请使用商家账号登录",
+    });
+  } else {
+    router.push("/manager");
+  }
+};
 </script>
 
 <template>
   <div class="h-screen p-2" style="background-color: #fafafa">
-    <div class="text-right">
-      <van-icon name="setting-o" size="1.25rem" @click="router.push('/setting')" />
-    </div>
     <userInfo></userInfo>
     <tools></tools>
+    <div class="flex justify-between p-2 bg-white" @click="router.push('/pay')">
+      <div class="flex text-sm font-semibold">
+        <span class="mr-1"
+          ><van-icon
+            name="cart-circle-o"
+            size="1rem"
+            color="#000000"
+            class="font-semibold"
+        /></span>
+        <span class="flex items-center text-sm">用户购买管理</span>
+      </div>
+      <div class="flex text-xs">
+        <span class="flex items-center" style="color: #b6b5bf"></span>
+        <span class="flex items-center"
+          ><van-icon name="arrow" color="#B6B5BF"
+        /></span>
+      </div>
+    </div>
+    <div class="flex justify-between p-2 bg-white" @click="toBrand()">
+      <div class="flex text-sm font-semibold">
+        <span class="mr-1"
+          ><van-icon
+            name="more-o"
+            size="1rem"
+            color="#000000"
+            class="font-semibold"
+        /></span>
+        <span class="flex items-center text-sm">商家管理</span>
+      </div>
+      <div class="flex text-xs">
+        <span class="flex items-center" style="color: #b6b5bf"></span>
+        <span class="flex items-center"
+          ><van-icon name="arrow" color="#B6B5BF"
+        /></span>
+      </div>
+    </div>
   </div>
 </template>
