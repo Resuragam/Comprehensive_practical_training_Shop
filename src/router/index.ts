@@ -1,13 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: [
         {
             path: '/',
             component: import('@/layouts/index.vue'),
             name: "index",
-            redirect: '/index',
+            redirect: '/login',
             children: [
                 {
                     path: '/index',
