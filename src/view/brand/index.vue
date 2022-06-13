@@ -9,6 +9,7 @@ import { Toast } from "vant";
 const route = useRoute();
 const router = useRouter();
 const searchValue = ref("");
+
 const onSearch = () => {};
 
 interface GoodInfo {
@@ -135,11 +136,11 @@ const attendBrand = () => {
     <van-icon name="arrow-left" @click="router.back()" />
     <van-icon name="weapp-nav" />
   </div>
-  <van-search
+  <!-- <van-search
     v-model="searchValue"
     placeholder="请输入搜索商品"
     @search="onSearch"
-  />
+  /> -->
   <div v-if="showloading" class="text-center">
     <van-loading type="spinner" />
   </div>
@@ -149,15 +150,15 @@ const attendBrand = () => {
         <div class="flex"><img :src="brandInfo.avatar" alt="" /></div>
         <div class="pl-5">
           <div>{{ brandInfo.sroteName }}</div>
-          <van-tag v-if="brandInfo.attend" type="success" size="medium">{{
+          <van-tag v-if="brandInfo.attend&&userId!==brandId" type="success" size="medium">{{
             brandInfo.tagText
           }}</van-tag>
-          <van-tag v-else type="default" size="medium">{{
+          <van-tag v-else-if="brandInfo.attend===false&&userId!==brandId" type="default" size="medium">{{
             brandInfo.tagText
           }}</van-tag>
         </div>
       </div>
-      <template #right>
+      <template #right v-if="userId!==brandId">
         <van-button
           v-if="brandInfo.attend"
           square

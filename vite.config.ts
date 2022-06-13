@@ -21,17 +21,17 @@ export default defineConfig({
       resolves: [VantResolve()],
     }),
   ],
-  // server: {
-  //   open: true,
-  //   port: 8006,
-  //   proxy: {
-  //     '/api': {
-  //       target: 'http://101.43.184.159:8006',
-  //       changeOrigin: true,
-  //       rewrite: path => path.replace(/^\/api/, '')
-  //     },
-  //   }
-  // },
+  server: {
+    open: true,
+    port: 8006,
+    proxy: {
+      '/api': {
+        target: 'http://101.43.184.159:8006',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+    }
+  },
   // server: {
   //   // 服务器主机名
   //   host: 'localhost',

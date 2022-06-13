@@ -1,10 +1,9 @@
 <script lang='ts' setup name="favorite">
-import { deleteCartProducts } from "@/api/shopcart";
 import { getUserAttendGoods, userAttendProduct } from "@/api/user";
-import GoodsCard from "@/components/goods/GoodsCard.vue";
 import { Toast } from "vant";
 import { onMounted, reactive, ref } from "vue";
-
+import { useRouter } from "vue-router";
+const router = useRouter();
 interface GoodInfo {
   productId: string;
   brandId: string;
@@ -73,6 +72,16 @@ const deleteProduct = (index: number, productId: string) => {
     }
   });
 };
+
+const toGoods = (brandId:string,productId:string) => {
+  router.push({
+    path: '/good',
+    query: {
+      brandId,
+      productId
+    }
+  })
+}
 </script>
 
 <template>
@@ -97,6 +106,7 @@ const deleteProduct = (index: number, productId: string) => {
         :title="item.productName"
         :thumb="item.pic"
         class="bg-white p-1"
+        @click="toGoods(item.brandId,item.productId)"
       >
       </van-card>
       <template #right>

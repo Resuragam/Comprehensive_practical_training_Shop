@@ -6,18 +6,11 @@ import { Toast } from "vant";
 import { useStore } from "vuex";
 const router = useRouter();
 const store = useStore();
+const identity = sessionStorage.getItem("identity");
 const toBrand = () => {
-  const identity = sessionStorage.getItem("identity");
   console.warn(identity);
   console.warn(typeof identity);
-  if (Number(identity)===1) {
-    console.warn(store);
-    Toast.fail({
-      message: "请使用商家账号登录",
-    });
-  } else {
-    router.push("/manager");
-  }
+  router.push("/manager")
 };
 </script>
 
@@ -43,7 +36,7 @@ const toBrand = () => {
         /></span>
       </div>
     </div>
-    <div class="flex justify-between p-2 bg-white" @click="toBrand()">
+    <div class="flex justify-between p-2 bg-white" @click="toBrand()" v-if="identity==='0'">
       <div class="flex text-sm font-semibold">
         <span class="mr-1"
           ><van-icon
@@ -53,6 +46,24 @@ const toBrand = () => {
             class="font-semibold"
         /></span>
         <span class="flex items-center text-sm">商家管理</span>
+      </div>
+      <div class="flex text-xs">
+        <span class="flex items-center" style="color: #b6b5bf"></span>
+        <span class="flex items-center"
+          ><van-icon name="arrow" color="#B6B5BF"
+        /></span>
+      </div>
+    </div>
+    <div class="flex justify-between p-2 bg-white" @click="toBrand()" v-if="identity==='0'">
+      <div class="flex text-sm font-semibold">
+        <span class="mr-1"
+          ><van-icon
+            name="apps-o"
+            size="1rem"
+            color="#000000"
+            class="font-semibold"
+        /></span>
+        <span class="flex items-center text-sm">商品管理</span>
       </div>
       <div class="flex text-xs">
         <span class="flex items-center" style="color: #b6b5bf"></span>

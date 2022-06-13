@@ -2,7 +2,9 @@
 import { getUserAttendBrand, userAttendBrand } from "@/api/user";
 import { Toast } from "vant";
 import { onMounted, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 interface BrandInfo {
   brandId: string;
   avatar: string;
@@ -60,6 +62,16 @@ const attendBrand = (brandId: string) => {
     }
   });
 };
+
+const toBrand = (brandId: string) => {
+  console.warn(brandInfoData.list)
+  router.push({
+    path: '/brand',
+    query: {
+      brandId,
+    }
+  })
+}
 </script>
 
 <template>
@@ -75,7 +87,7 @@ const attendBrand = (brandId: string) => {
   <div v-else>
     <van-empty description="没有订阅的商铺" v-if="brandInfoData.list.length === 0" />
     <van-swipe-cell v-for="item in brandInfoData.list">
-      <div class="flex p-2">
+      <div class="flex p-2"  @click="toBrand(item.brandId)">
         <div class="flex"><img :src="item.avatar" alt="" /></div>
         <div class="pl-5">
           <div>{{ item.sroteName }}</div>

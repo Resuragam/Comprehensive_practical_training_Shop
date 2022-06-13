@@ -180,11 +180,9 @@ const onConfirm = (value: any) => {
       >
         <span v-if="!clickSubmit">注册</span>
         <span v-else
-          >注册中...&nbsp;&nbsp;<van-loading
-            type="spinner"
-            class="inline"
-            size="1rem"
-        /></span>
+          >注册中...&nbsp;&nbsp;
+          <van-loading type="spinner" class="inline" size="1rem" />
+        </span>
       </van-button>
     </div>
     <div

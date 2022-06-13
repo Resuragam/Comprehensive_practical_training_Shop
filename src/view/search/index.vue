@@ -88,6 +88,25 @@ const onSearch = () => {
     }
   });
 };
+
+const toGoods = (brandId:string,productId:string) => {
+  router.push({
+    path: '/good',
+    query: {
+      brandId,
+      productId
+    }
+  })
+}
+
+const toBrand = (brandId:string) => {
+  router.push({
+    path: '/brand',
+    query: {
+      brandId,
+    }
+  })
+}
 </script>
 
 <template>
@@ -119,6 +138,7 @@ const onSearch = () => {
           :title="item.productName"
           :thumb="item.pic"
           class="bg-white p-1"
+          @click="toGoods(item.brandId,item.productId)"
         >
         </van-card>
       </div>
@@ -128,7 +148,7 @@ const onSearch = () => {
         <van-loading type="spinner" />
       </div>
       <div v-else class="pt-2">
-        <div class="flex p-2" v-for="item in brandInfoData.list">
+        <div class="flex p-2" v-for="item in brandInfoData.list" @click="toBrand(item.brandId)">
           <div class="flex"><img :src="item.avatar" alt="" /></div>
           <div class="pl-5">
             <div>{{ item.sroteName }}</div>

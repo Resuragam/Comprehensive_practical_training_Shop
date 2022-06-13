@@ -9,7 +9,11 @@ const store = useStore()
 const route = useRoute();
 const router = useRouter();
 const productId = String(route.query.productId);
+const brandId = String(route.query.brandId);
 const loading = ref(true);
+const identity = ref(sessionStorage.getItem('identity'))
+const userId = store.state.user.userId
+
 interface GoodInfo {
   productId: string;
   brandId: string;
@@ -41,6 +45,8 @@ const goodsData: GoodInfo = reactive({
 });
 
 let images: Array<string> = [];
+console.warn(identity.value)
+console.warn(typeof identity.value)
 onMounted(() => {
   console.warn(productId);
   getGoodsByGoodId(productId).then((res) => {
@@ -103,7 +109,7 @@ export default {
     <div>
       <img :src="goodsData.description" alt="">
     </div>
-    <div class="h-50px"></div>
-    <actionBar :goodInfo="goodsData"></actionBar>
+    <div class="h-50px" v-if="userId!== brandId"></div>
+    <actionBar :goodInfo="goodsData" v-if="userId!== brandId"></actionBar>
   </div>
 </template>
