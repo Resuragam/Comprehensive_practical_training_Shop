@@ -2,7 +2,6 @@
 import userInfo from "@/components/my/UserInfo.vue";
 import tools from "@/components/my/tools.vue";
 import { useRouter } from "vue-router";
-import { Toast } from "vant";
 import { useStore } from "vuex";
 const router = useRouter();
 const store = useStore();
