@@ -1,11 +1,12 @@
-<script lang='ts' setup name="actionBar">
+<script lang="ts" setup name="actionBar">
 import { getUserCheckAttend, userAttendProduct } from "@/api/user";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { addToCart } from "@/api/shopcart";
-import { Toast } from "vant";
+import { Dialog, Toast } from "vant";
+import { userCreateOrder, userPayOrder } from "@/api/order";
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
@@ -99,7 +100,7 @@ const toShopCart = () => {
 
 // 添加购物车
 const addShopcart = () => {
-  console.warn('props.goodInfo',props.goodInfo)
+  console.warn("props.goodInfo", props.goodInfo);
   const pic = props.goodInfo.pic;
   const productName = props.goodInfo.productName;
   const price = props.goodInfo.price;
@@ -126,6 +127,63 @@ const addShopcart = () => {
     }
   });
 };
+
+const onSubmit = () => {
+  let list: any = [];
+  const listItem = {
+    brandId: brandId.value,
+    payType: 0,
+    totalAmount: props.goodInfo.price,
+    status: 0,
+    address: "HNUST",
+    userId: userId.value,
+  };
+  list.push(listItem);
+  console.warn("list", list);
+  if (list.length !== 0) {
+    Dialog.confirm({
+      message: "确认支付",
+    }).then(() => {
+      userCreateOrder(list).then((res: any) => {
+        console.warn(res);
+        if (res.code === 20000) {
+          // 执行订单创建操作
+          let paylist: any = [];
+          let payHasList: any = [];
+          const listItem = {
+            orderId: res.data.order[0].orderId,
+            orderSn: res.data.order[0].orderSn,
+            userId: userId.value,
+            productId: props.goodInfo.productId,
+            pic: props.goodInfo.pic,
+            productName: props.goodInfo.productName,
+            price: props.goodInfo.price,
+            quantity: props.goodInfo.quantity,
+            brought: {
+              productId: props.goodInfo.productId,
+              userId: userId.value,
+            },
+          };
+          paylist.push(listItem);
+          payHasList.push(props.goodInfo.productId);
+          console.warn(paylist);
+          userPayOrder(paylist).then((res: any) => {
+            console.warn(res);
+            if (res.code === 20000) {
+              Toast.success({
+                message: "支付成功",
+              });
+            } else {
+              Toast.fail({
+                message: "支付失败，请重试",
+              });
+            }
+          });
+        }
+      });
+    });
+  } 
+};
 </script>
 
 <template>
@@ -149,8 +207,7 @@ const addShopcart = () => {
         text="加入购物车"
         @click="addShopcart()"
       />
-      <van-action-bar-button type="danger" text="立即购买" />
+      <van-action-bar-button type="danger" text="立即购买" @click="onSubmit"/>
     </van-action-bar>
   </div>
 </template>
- 
