@@ -1,7 +1,5 @@
 import axios from 'axios'
-import { config } from 'process'
 import { Toast } from 'vant'
-import { getToken } from './cookies'
 
 // 创建axios实例
 const service = axios.create({
