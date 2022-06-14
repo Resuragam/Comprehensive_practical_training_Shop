@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Toast } from 'vant'
-import { getToken } from './cookies'
 
 // 创建axios实例
 const service = axios.create({
@@ -27,6 +26,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response) => {
         const res = response.data
+        console.warn(res)
+        console.warn(typeof res)
         if (res.message ==='未登录！') {
             Toast.fail({    
                 message: '登录状态错误',
@@ -36,7 +37,7 @@ service.interceptors.response.use(
             setTimeout(() => {
                 location.href = '/login'
             }, 1000)
-        }
+        } 
         return res
     },
 )

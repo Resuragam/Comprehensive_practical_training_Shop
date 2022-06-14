@@ -19,7 +19,7 @@ interface GoodInfo {
 }
 
 interface GoodsData {
-  list: Array<GoodInfo>;
+  list: Array<Good.GoodInfo>;
 }
 
 const props = defineProps({
