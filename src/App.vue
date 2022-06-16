@@ -7,8 +7,6 @@ const onRefresh = () => {
 </script>
 
 <template>
-  <van-pull-refresh v-model="loading" @refresh="onRefresh" class="h-full">
-    <router-view></router-view>
-  </van-pull-refresh>
+  <router-view></router-view>
 </template>
 
