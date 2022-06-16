@@ -34,20 +34,34 @@ export function getBrandOrder(brandId: string) {
     })
 }
 
-//详细描述：根据用户id查询未发货订单
-export function getUserNoOrder(userId: string) {
-    return request({
-        method: "get",
-        url: `/infoservice/order/queryNoShipByUserId/${userId}`,
-    })
+// 详细描述：根据商家id查询已发货订单
+export function getDeliveryList(userId: string, identity: string) {
+    if (identity === '1') // 用户身份
+        return request({
+            method: "get",
+            url: `/infoservice/order/queryShipByUserId/${userId}`,
+        })
+    else {
+        return request({
+            method: "get",
+            url: `/infoservice/order/queryShip/${userId}`,
+        })
+    }
 }
 
-//详细描述：根据商家id查询未发货订单
-export function getBrandNoOrder(brandId: string) {
-    return request({
-        method: "get",
-        url: `/infoservice/order/queryNoShip/${brandId}`,
-    })
+//详细描述：根据用户id查询未发货订单
+export function getNotDeliveryList(userId: string, identity: string) {
+    if (identity === '1') // 用户身份
+        return request({
+            method: "get",
+            url: `/infoservice/order/queryNoShipByUserId/${userId}`,
+        })
+    else {
+        return request({
+            method: "get",
+            url: `/infoservice/order/queryNoShip/${userId}`,
+        })
+    }
 }
 
 //详细描述：用户根据订单id确认收货
@@ -67,7 +81,7 @@ export function getOrderInfo(orderId: string) {
 }
 
 // 详细描述：根据订单id商家进行发货
-export function brandPushOrder(orderId: string) {
+export function brandDeliveryGoods(orderId: string) {
     return request({
         method: "post",
         url: '/infoservice/order/ship',
@@ -77,18 +91,18 @@ export function brandPushOrder(orderId: string) {
     })
 }
 
-// 详细描述：根据用户id查询已收货订单
-export function recipitOrderUser(userId: string) {
-    return request({
-        method: "get",
-        url: `/infoservice/order/queryReceipt/${userId}`,
-    })
-}
 
-// 详细描述：根据用户id查询已收货订单
-export function recipitOrderBrand(userId: string) {
-    return request({
-        method: "get",
-        url: `/infoservice/order/queryReceiptBrand/${userId}`,
-    })
+//详细描述：根据id查询收货订单
+export function getreciptList(userId: string, identity: string) {
+    if (identity === '1') // 用户身份
+        return request({
+            method: "get",
+            url: `/infoservice/order/queryReceipt/${userId}`,
+        })
+    else {
+        return request({
+            method: "get",
+            url: `/infoservice/order/queryReceiptBrand/${userId}`,
+        })
+    }
 }

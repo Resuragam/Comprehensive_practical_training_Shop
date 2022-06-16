@@ -158,7 +158,7 @@ const onSubmit = () => {
             pic: props.goodInfo.pic,
             productName: props.goodInfo.productName,
             price: props.goodInfo.price,
-            quantity: props.goodInfo.quantity,
+            quantity: 1,
             brought: {
               productId: props.goodInfo.productId,
               userId: userId.value,

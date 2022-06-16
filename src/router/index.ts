@@ -64,6 +64,24 @@ const router = createRouter({
                     path: '/pay',
                     name: "pay",
                     component: () => import('@/view/pay/index.vue'),
+                    redirect: '/pay/notdelivery',
+                    children: [
+                        {
+                            path: '/pay/notdelivery',
+                            name: "notDelivery",
+                            component: () => import('@/components/pay/NotDeliveryList.vue'),
+                        },
+                        {
+                            path: '/pay/delivery',
+                            name: "delivery",
+                            component: () => import('@/components/pay/DeliveryList.vue'),
+                        },
+                        {
+                            path: '/pay/receipt',
+                            name: "receipt",
+                            component: () => import('@/components/pay/ReceiptList.vue'),
+                        }
+                    ]
                 },
                 {
                     path: '/manager',

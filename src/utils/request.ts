@@ -12,10 +12,9 @@ const service = axios.create({
 service.interceptors.request.use(
     (config: any) => {
         const token = sessionStorage.getItem('token')
-        console.warn(typeof token)
-        console.warn(token)
-        if (token)
+        if (token) {
             config.headers.Authorization = token
+        }
         return config
     },
     (error) => {
@@ -26,8 +25,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response) => {
         const res = response.data
-        console.warn(res)
-        console.warn(typeof res)
         if (res.message ==='未登录！') {
             Toast.fail({    
                 message: '登录状态错误',
