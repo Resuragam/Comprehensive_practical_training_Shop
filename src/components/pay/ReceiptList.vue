@@ -11,7 +11,13 @@ import { Toast } from "vant";
 
 const store = useStore();
 const userId = store.state.user.userId;
-const identity = store.state.user.identity;
+// const identity = store.state.user.identity;
+
+const props = defineProps({
+  identity: {
+    type: String,
+  }
+})
 
 const receiptList: Array<Order.OrderInfo> = reactive([]); // 未支付的订单数据
 const receiptInfoList: Array<Order.OrderDetailsInfo> = reactive([]);
@@ -19,7 +25,7 @@ const receiptInfoList: Array<Order.OrderDetailsInfo> = reactive([]);
 const loading = ref(true); // 优化加载
 
 onMounted(() => {
-  getreciptList(userId, identity).then((res: any) => {
+  getreciptList(userId, String(props.identity)).then((res: any) => {
     console.warn(res);
     if (res.code === 20000) {
       const promiseList: Array<any> = [];
