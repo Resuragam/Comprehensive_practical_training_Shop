@@ -109,7 +109,7 @@ const onRefresh = () => {
             :thumb="notDeliveryInfoListItem.pic"
             class="mb-2"
           />
-          <template #right v-if="String(identity) === '0'">
+          <template #right v-if="String(props.identity) === '0'">
             <van-button
               square
               text="发货"

@@ -22,7 +22,7 @@ const identity = 1 // 此时均为获取当前用户的购买信息
   <van-tabs v-model:active="activePath" color="#000000">
     <van-tab title="未发货" to="/pay/notdelivery" name="notdelivery">
       <router-view v-slot="{ Component }" :identity="identity">
-        <keep-alive include="notDelivery" :max="2">
+        <keep-alive include="notDelivery">
           <component :is="Component"/>
         </keep-alive>
       </router-view>

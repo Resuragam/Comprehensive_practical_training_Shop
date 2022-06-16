@@ -68,17 +68,17 @@ const router = createRouter({
                     children: [
                         {
                             path: '/pay/notdelivery',
-                            name: "notDelivery",
+                            name: "userNotDelivery",
                             component: () => import('@/components/pay/NotDeliveryList.vue'),
                         },
                         {
                             path: '/pay/delivery',
-                            name: "delivery",
+                            name: "userDelivery",
                             component: () => import('@/components/pay/DeliveryList.vue'),
                         },
                         {
                             path: '/pay/receipt',
-                            name: "receipt",
+                            name: "userReceipt",
                             component: () => import('@/components/pay/ReceiptList.vue'),
                         }
                     ]
@@ -87,6 +87,24 @@ const router = createRouter({
                     path: '/manager',
                     name: "manager",
                     component: () => import('@/view/manager/index.vue'),
+                    redirect: '/manager/notdelivery',
+                    children: [
+                        {
+                            path: '/manager/notdelivery',
+                            name: "brandNotDelivery",
+                            component: () => import('@/components/pay/NotDeliveryList.vue'),
+                        },
+                        {
+                            path: '/manager/delivery',
+                            name: "brandDelivery",
+                            component: () => import('@/components/pay/DeliveryList.vue'),
+                        },
+                        {
+                            path: '/manager/receipt',
+                            name: "brandReceipt",
+                            component: () => import('@/components/pay/ReceiptList.vue'),
+                        }
+                    ]
                 },
                 {
                     path: '/subscribe',
