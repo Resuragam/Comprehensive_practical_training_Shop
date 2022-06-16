@@ -3,8 +3,8 @@ import { Toast } from 'vant'
 
 // 创建axios实例
 const service = axios.create({
-    // baseURL:'/api',
-    baseURL:'http://101.43.184.159:8006',
+    baseURL:'/api',
+    // baseURL:'http://101.43.184.159:8006',
     timeout: 10000,
 })
 
