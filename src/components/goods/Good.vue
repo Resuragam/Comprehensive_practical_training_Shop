@@ -1,7 +1,7 @@
 <script lang="ts">
 export default {
-  name:'Good'
-}
+  name: "Good",
+};
 </script>
 
 <script lang='ts' setup name="good">
@@ -9,37 +9,29 @@ import { getGoodsByCategoryId } from "@/api/goods";
 import GoodsCard from "@/components/goods/GoodsCard.vue";
 import { reactive, ref } from "vue";
 
-interface GoodsData {
-  list: Array<Goods.GoodInfo>;
-}
-
 const props = defineProps({
   categoryId: {
     type: Number,
   },
 });
 
-const goodsData: GoodsData = reactive({
-  list: [],
-});
+const goodsInfoList: Array<Goods.GoodInfo> = reactive([]);
 
+// 分页加载
 const loading = ref(false);
 const finished = ref(false);
 let current = ref(1);
 const limit = ref(4);
 const onLoad = () => {
-  console.warn("发送请求");
   setTimeout(() => {
     getGoodsByCategoryId(
       current.value,
       limit.value,
       Number(props.categoryId)
     ).then((res: any) => {
-      console.warn("成功拿到数据");
-      console.log(res.data);
       if (res.code === 20000) {
         res.data.rows.forEach((item: any) => {
-          goodsData.list.push(item);
+          goodsInfoList.push(item);
         });
         // 加载状态结束
         loading.value = false;
@@ -47,7 +39,6 @@ const onLoad = () => {
         // 数据全部加载完成
         if (res.data.rows.length < limit.value) {
           finished.value = true;
-          console.warn(goodsData.list);
         }
       }
     });
@@ -59,7 +50,11 @@ const onLoad = () => {
   <van-list v-model:loading="loading" :finished="finished" @load="onLoad">
     <template #default>
       <div class="inline-grid grid-cols-2">
-        <GoodsCard v-for="item in goodsData.list" :key="item.categoryId" :goodInfo="item"></GoodsCard>
+        <GoodsCard
+          v-for="goodsInfoListItem in goodsInfoList"
+          :key="goodsInfoListItem.categoryId"
+          :goodInfo="goodsInfoListItem"
+        ></GoodsCard>
       </div>
     </template>
     <template #loading> <van-loading type="spinner" /> </template>
