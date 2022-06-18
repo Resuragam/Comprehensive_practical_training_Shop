@@ -1,104 +1,75 @@
-<!-- <script lang='ts' setup name="shopcart">
+<script lang="ts" setup>
 import { userCreateOrder, userPayOrder } from "@/api/order";
 import { deleteCartProducts, getUserCartProducts } from "@/api/shopcart";
 import { Dialog, Toast } from "vant";
-import { computed, onActivated, onDeactivated, reactive, ref } from "vue";
+import { computed, onDeactivated, onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
 
-// interface ShopCartInfo {
-//   id: string;
-//   productId: string;
-//   userId: string;
-//   pic: string;
-//   productName: string;
-//   price: string;
-//   quantity: string;
-// }
+const userId = store.state.user.userId;
+
+const shopCartData: Array<Order.OrderDetailsInfo> = reactive([]);
+let checked = ref([]);
 
 const loading = ref(true);
-const userId = ref(store.state.user.userId);
-let checked = ref([]);
-let shopCartData: Array<Order.OrderDetailsInfo> = reactive([]);
 
-// 删除购物车操作
-const deleteProduct = (index: number, productId: string) => {
-  checked.value.forEach((item: any, checkindex) => {
-    if (item.productId === productId) {
-      checked.value.splice(checkindex, 1);
-    }
-  });
-  deleteCartProducts(productId).then((res: any) => {
-    if (res.code === 20000) {
-      Toast.success({
-        message: "删除成功",
-        onClose() {
-          shopCartData.splice(index, 1);
-        },
-      });
-    } else {
-      Toast.fail({
-        message: "请重试",
-      });
-    }
-  });
-};
-
-onActivated(() => {
-  getUserCartProducts(userId.value).then((res: any) => {
-    console.warn(res);
-    console.warn(checked);
+// 获取购物车数据
+onMounted(() => {
+  getUserCartProducts(userId).then((res: any) => {
     shopCartData.length = 0;
+    console.warn(res);
     if (res.code === 20000 && res.message !== "未查询到商品！") {
-      res.data.list.forEach((item: any) => {
-        shopCartData.push(item);
+      res.data.list.forEach((OrderDetailsInfoItem: Order.OrderDetailsInfo) => {
+        shopCartData.push(OrderDetailsInfoItem);
       });
     }
     loading.value = false;
   });
 });
 
-const price = computed(() => {
-  let sum = 0;
-  checked.value.forEach((item: any) => {
-    sum = sum + Number(item.price) * 100 * Number(item.quantity);
+// 删除购物车操作
+const deleteProduct = (productId: string, index: number) => {
+  deleteCartProducts(productId).then((res: any) => {
+    if (res.code === 20000) {
+      Toast.success({
+        message: "删除成功",
+        onClose() {
+          shopCartData.splice(index, 1);
+          checked.value.forEach((checkProduct: any, checkindex) => {
+            if (checkProduct.productId === productId) {
+              checked.value.splice(checkindex, 1);
+            }
+          });
+        },
+      });
+    } else {
+      Toast.fail({
+        message: "删除失败，请重试",
+      });
+    }
   });
-  return sum;
-});
-
-onDeactivated(() => {
-  loading.value = true;
-  // sessionStorage.setItem('checked',checked.value)
-  checked.value.length = 0;
-});
-
-const ischecked = computed(() => {
-  if (
-    checked.value.length === shopCartData.length &&
-    shopCartData.length != 0
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-});
-
-console.warn(checked);
-const checkAll = () => {
-  if (ischecked.value == false) {
-    checked.value.length = 0;
-    shopCartData.forEach((item: any) => {
-      checked.push(item);
-    });
-  } else {
-    checked.value.length = 0;
-  }
 };
+
+// 计算价格
+const checkProductPrice = computed(() => {
+  let flag = 0;
+  checked.value.forEach((item: any) => {
+    flag = flag + Number(item.price) * 100 * Number(item.quantity);
+  });
+  return flag;
+});
+
+// 检查购物车是否选择全部商品
+const ischecked = computed(() => {
+  return (
+    checked.value.length === shopCartData.length && shopCartData.length != 0
+  );
+});
 
 const onSubmit = () => {
   console.warn(checked.value);
-  let list: any = [];
+  let payList: any = []; // 支付列表
   checked.value.forEach((item: any) => {
     const listItem = {
       brandId: item.brandId,
@@ -106,16 +77,16 @@ const onSubmit = () => {
       totalAmount: String(Number(item.price) * Number(item.quantity)),
       status: 0,
       address: "HNUST",
-      userId: userId.value,
+      userId: userId,
     };
-    list.push(listItem);
+    payList.push(listItem);
   });
-  console.warn("list", list);
-  if (list.length !== 0) {
+  console.warn("list", payList);
+  if (payList.length !== 0) {
     Dialog.confirm({
       message: "确认支付",
     }).then(() => {
-      userCreateOrder(list).then((res: any) => {
+      userCreateOrder(payList).then((res: any) => {
         console.warn(res);
         if (res.code === 20000) {
           // 执行订单创建操作
@@ -125,7 +96,7 @@ const onSubmit = () => {
             const listItem = {
               orderId: res.data.order[index].orderId,
               orderSn: res.data.order[index].orderSn,
-              userId: userId.value,
+              userId: userId,
               productId: item.productId,
               pic: item.pic,
               productName: item.productName,
@@ -133,29 +104,23 @@ const onSubmit = () => {
               quantity: item.quantity,
               brought: {
                 productId: item.productId,
-                userId: userId.value,
+                userId: userId,
               },
             };
             paylist.push(listItem);
             payHasList.push(item.productId);
           });
-          console.warn(paylist);
+          console.warn("paylist:", paylist);
           userPayOrder(paylist).then((res: any) => {
             console.warn(res);
             if (res.code === 20000) {
               Toast.success({
                 message: "支付成功",
                 onClose() {
-                  payHasList.forEach((item: any) => {
-                    deleteCartProducts(item).then((res) => {
-                      console.warn("支付成功删除购物车");
-                    });
-                  });
+                  checked.value.length = 0;
                 },
               });
-              getUserCartProducts(userId.value).then((res: any) => {
-                console.warn(res);
-                console.warn(checked);
+              getUserCartProducts(userId).then((res: any) => {
                 shopCartData.length = 0;
                 if (res.code === 20000 && res.message !== "未查询到商品！") {
                   res.data.list.forEach((item: any) => {
@@ -174,13 +139,15 @@ const onSubmit = () => {
       });
     });
   } else {
-    Toast.fail('当前购物车没有订单')
+    Toast.fail("当前购物车没有订单");
   }
 };
+
+// 加载
 </script>
 
 <template>
-  <div v-if="loading" class="text-center">
+  <div v-if="loading" class="text-center mt-2">
     <van-loading type="spinner" />
   </div>
   <div v-else>
@@ -191,18 +158,19 @@ const onSubmit = () => {
     <van-empty description="购物车空空如也" v-if="shopCartData.length === 0" />
     <van-checkbox-group v-model="checked">
       <van-checkbox
-        :name="item"
-        v-for="(item, index) in shopCartData"
+        v-for="(shopCartDataItem, index) in shopCartData"
+        :name="shopCartDataItem"
+        :key="shopCartDataItem.id"
         class="bg-white pl-2 mx-2 py-3"
         icon-size="1rem"
         ><div>
           <van-swipe-cell>
             <van-card
-              :key="item.productId"
-              :num="item.quantity"
-              :price="item.price"
-              :title="item.productName"
-              :thumb="item.pic"
+              :key="shopCartDataItem.productId"
+              :num="shopCartDataItem.quantity"
+              :price="shopCartDataItem.price"
+              :title="shopCartDataItem.productName"
+              :thumb="shopCartDataItem.pic"
               class="bg-white p-1"
             >
             </van-card>
@@ -211,7 +179,7 @@ const onSubmit = () => {
                 color="#d4d4d4"
                 text="删除"
                 class="h-full"
-                @click="deleteProduct(index, item.productId)"
+                @click="deleteProduct(shopCartDataItem.productId, index)"
               />
             </template>
           </van-swipe-cell></div
@@ -219,12 +187,12 @@ const onSubmit = () => {
     </van-checkbox-group>
   </div>
   <van-submit-bar
-    :price="price"
+    :price="checkProductPrice"
     button-text="提交订单"
     @submit="onSubmit"
     class="flxed bottom-50px"
   >
-    <van-checkbox v-model="ischecked" @click="checkAll">全选</van-checkbox>
+    <!-- <van-checkbox v-model="ischecked" @click="checkAll">全选</van-checkbox> -->
   </van-submit-bar>
   <div class="h-100px"></div>
-</template> -->
+</template>

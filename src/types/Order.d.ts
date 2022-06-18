@@ -18,12 +18,13 @@ declare namespace Order {
     //
     interface OrderDetailsInfo {
         id: string; // id
-        orderId: string; // 订单id
-        orderSn: string; // 订单编号
         pic: string; // 详情图片
         price: number; // 价格
         productId: string; // 商品id
         productName: string; // 商品名字
         quantity: string; // 商品数量
+        userId?: string;
+        orderId?: string; // 订单id
+        orderSn?: string; // 订单编号
     }
 }

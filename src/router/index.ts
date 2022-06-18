@@ -31,7 +31,7 @@ const router = createRouter({
                         {
                             path: '/shopcart',
                             name: 'shopcart',
-                            component: () => import('@/view/shopCart/ShopCart.vue'),
+                            component: () => import('@/components/shopCart/ShopCart.vue'),
                         },
                         {
                             path: '/my',

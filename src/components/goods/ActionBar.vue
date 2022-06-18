@@ -104,7 +104,7 @@ const addShopcart = () => {
   const pic = props.goodInfo.pic;
   const productName = props.goodInfo.productName;
   const price = props.goodInfo.price;
-  const quantity = 1;
+  const quantity = '1';
   console.warn(quantity);
   addToCart(
     productId.value,
@@ -113,7 +113,7 @@ const addShopcart = () => {
     pic,
     productName,
     price,
-    String(quantity)
+    quantity
   ).then((res: any) => {
     console.warn("添加购物车", res);
     if (res.code === 20000) {
