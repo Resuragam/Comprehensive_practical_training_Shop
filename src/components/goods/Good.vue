@@ -1,25 +1,16 @@
+<script lang="ts">
+export default {
+  name:'Good'
+}
+</script>
+
 <script lang='ts' setup name="good">
 import { getGoodsByCategoryId } from "@/api/goods";
 import GoodsCard from "@/components/goods/GoodsCard.vue";
-import { onMounted, reactive, ref } from "vue";
-
-interface GoodInfo {
-  productId: string;
-  brandId: string;
-  categoryId: number;
-  productName: string;
-  pic: string;
-  checkStatus: number;
-  status: number;
-  sale: number;
-  price: number;
-  detailDesc: string;
-  stock: number;
-  description: string;
-}
+import { reactive, ref } from "vue";
 
 interface GoodsData {
-  list: Array<Good.GoodInfo>;
+  list: Array<Goods.GoodInfo>;
 }
 
 const props = defineProps({
@@ -65,16 +56,11 @@ const onLoad = () => {
 </script>
 
 <template>
-  <!-- <div class="inline-grid grid-cols-2">
-    <GoodsCard v-for="item in goodsData.list"></GoodsCard>
-    <GoodsCard v-for="item in recommendGoods"> </GoodsCard>
-  </div> -->
   <van-list v-model:loading="loading" :finished="finished" @load="onLoad">
     <template #default>
-      <lazy-component class="inline-grid grid-cols-2">
+      <div class="inline-grid grid-cols-2">
         <GoodsCard v-for="item in goodsData.list" :key="item.categoryId" :goodInfo="item"></GoodsCard>
-      </lazy-component>
-      <!-- <GoodsCard v-for="item in goodsData.list"></GoodsCard> -->
+      </div>
     </template>
     <template #loading> <van-loading type="spinner" /> </template>
   </van-list>

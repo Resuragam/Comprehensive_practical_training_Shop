@@ -1,13 +1,13 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: [
         {
             path: '/',
-            component: import('@/layouts/index.vue'),
+            component: () => import('@/layouts/index.vue'),
             name: "index",
-            redirect: '/login',
+            redirect: '/index',
             children: [
                 {
                     path: '/index',
@@ -23,8 +23,8 @@ const router = createRouter({
                             children: [
                                 {
                                     path: '/home/goods',
-                                    name: "tabs",
-                                    component: () => import('@/components/home/Tabs.vue'),
+                                    name: "Goods",
+                                    component: () => import('@/components/goods/Good.vue'),
                                 }
                             ]
                         },

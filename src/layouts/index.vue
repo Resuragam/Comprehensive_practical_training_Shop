@@ -1,8 +1,7 @@
-<script lang='ts' setup name="index">
+<script lang='ts' setup>
 </script>
 
 <template>
-  <router-view>
-  </router-view>
+  <router-view></router-view>
 </template>
 
