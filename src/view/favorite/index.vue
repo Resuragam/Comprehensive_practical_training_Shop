@@ -35,28 +35,28 @@ onMounted(() => {
   getUserAttendGoods(String(userId)).then((res: any) => {
     console.warn("成功拿到数据");
     console.log(res.data);
-    if (res.code === 20000&&res.message!=="未收藏任何商品") {
+    if (res.code === 20000 && res.message !== "未收藏任何商品") {
       res.data.list.forEach((item: any) => {
         goodsData.list.push(item);
       });
     }
-      loading.value = false;
+    loading.value = false;
   });
 });
 
 const onClickLeft = () => history.back();
 const deleteProduct = (index: number, productId: string) => {
   userAttendProduct(String(userId), productId).then((res: any) => {
-    console.warn(res)
+    console.warn(res);
     if (res.code === 20000) {
       Toast.success({
         message: "取消收藏",
         onClose() {
-          goodsData.list.length = 0
           getUserAttendGoods(String(userId)).then((res: any) => {
             console.warn("成功拿到数据");
             console.log(res.data);
             if (res.code === 20000) {
+              goodsData.list.length = 0;
               res.data.list.forEach((item: any) => {
                 goodsData.list.push(item);
               });
@@ -73,15 +73,15 @@ const deleteProduct = (index: number, productId: string) => {
   });
 };
 
-const toGoods = (brandId:string,productId:string) => {
+const toGoods = (brandId: string, productId: string) => {
   router.push({
-    path: '/good',
+    path: "/good",
     query: {
       brandId,
-      productId
-    }
-  })
-}
+      productId,
+    },
+  });
+};
 </script>
 
 <template>
@@ -97,7 +97,7 @@ const toGoods = (brandId:string,productId:string) => {
   <div v-else>
     <van-empty
       description="没有收藏的商品"
-      v-if="goodsData.list.length===0"
+      v-if="goodsData.list.length === 0"
     />
     <van-swipe-cell v-for="(item, index) in goodsData.list" class="m-2">
       <van-card
@@ -106,7 +106,7 @@ const toGoods = (brandId:string,productId:string) => {
         :title="item.productName"
         :thumb="item.pic"
         class="bg-white p-1"
-        @click="toGoods(item.brandId,item.productId)"
+        @click="toGoods(item.brandId, item.productId)"
       >
       </van-card>
       <template #right>

@@ -53,7 +53,7 @@ const toBrand = () => {
         /></span>
       </div>
     </div>
-    <div class="flex justify-between p-2 bg-white" @click="toBrand()" v-if="identity==='0'">
+    <!-- <div class="flex justify-between p-2 bg-white" @click="toBrand()" v-if="identity==='0'">
       <div class="flex text-sm font-semibold">
         <span class="mr-1"
           ><van-icon
@@ -70,6 +70,6 @@ const toBrand = () => {
           ><van-icon name="arrow" color="#B6B5BF"
         /></span>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>

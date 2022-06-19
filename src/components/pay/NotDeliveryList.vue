@@ -115,7 +115,7 @@ const onRefresh = () => {
               text="发货"
               type="primary"
               class="primary-button h-full"
-              @click="deliveryGoods(notDeliveryInfoListItem.orderId, index)"
+              @click="deliveryGoods(String(notDeliveryInfoListItem.orderId), index)"
             />
           </template>
         </van-swipe-cell>

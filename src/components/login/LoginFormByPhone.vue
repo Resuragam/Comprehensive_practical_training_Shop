@@ -2,7 +2,7 @@
 import { loginBrandByPhone } from "@/api/brand";
 import { loginByPhone } from "@/api/login";
 import { useStore } from "vuex";
-import { getToken,setToken} from "@/utils/cookies";
+// import { getToken,setToken} from "@/utils/cookies";
 import { Toast } from "vant";
 import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -68,7 +68,6 @@ const onSubmit = () => {
               store.commit("SET_USER_PHONE", res.data.user.phone);
               console.warn(store.state.user);
               console.warn(store);
-              console.warn(getToken());
               clickSubmit.value = false;
               router.push("/home");
             },
@@ -99,7 +98,6 @@ const onSubmit = () => {
               store.commit("SET_USER_USERID", res.data.brand.brandId);
               store.commit("SET_USER_PHONE", res.data.brand.phone);
               console.warn(store);
-              console.warn(getToken());
               clickSubmit.value = false;
               router.push("/home");
             },

@@ -185,13 +185,13 @@ const attendBrand = () => {
       finished-text="没有更多商品了"
     >
       <template #default>
-        <lazy-component class="inline-grid grid-cols-2">
+        <div class="inline-grid grid-cols-2">
           <GoodsCard
             v-for="item in goodsData.list"
             :key="item.categoryId"
             :goodInfo="item"
           ></GoodsCard>
-        </lazy-component>
+        </div>
         <!-- <GoodsCard v-for="item in goodsData.list"></GoodsCard> -->
       </template>
       <template #loading> <van-loading type="spinner" /> </template>

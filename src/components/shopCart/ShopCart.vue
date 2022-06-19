@@ -2,7 +2,7 @@
 import { userCreateOrder, userPayOrder } from "@/api/order";
 import { deleteCartProducts, getUserCartProducts } from "@/api/shopcart";
 import { Dialog, Toast } from "vant";
-import { computed, onDeactivated, onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -192,7 +192,6 @@ const onSubmit = () => {
     @submit="onSubmit"
     class="flxed bottom-50px"
   >
-    <!-- <van-checkbox v-model="ischecked" @click="checkAll">全选</van-checkbox> -->
   </van-submit-bar>
   <div class="h-100px"></div>
 </template>

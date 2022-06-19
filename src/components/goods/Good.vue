@@ -23,6 +23,7 @@ const finished = ref(false);
 let current = ref(1);
 const limit = ref(4);
 const onLoad = () => {
+  // console.warn('加载数据...')
   setTimeout(() => {
     getGoodsByCategoryId(
       current.value,
