@@ -11,6 +11,10 @@ const toBrand = () => {
   console.warn(typeof identity);
   router.push("/manager")
 };
+
+const toAudit = () => {
+  router.push("/audit")
+}
 </script>
 
 <template>
@@ -53,7 +57,7 @@ const toBrand = () => {
         /></span>
       </div>
     </div>
-    <!-- <div class="flex justify-between p-2 bg-white" @click="toBrand()" v-if="identity==='0'">
+    <div class="flex justify-between p-2 bg-white" @click="toAudit()" v-if="identity==='0'">
       <div class="flex text-sm font-semibold">
         <span class="mr-1"
           ><van-icon
@@ -62,7 +66,7 @@ const toBrand = () => {
             color="#000000"
             class="font-semibold"
         /></span>
-        <span class="flex items-center text-sm">商品管理</span>
+        <span class="flex items-center text-sm">商品审核</span>
       </div>
       <div class="flex text-xs">
         <span class="flex items-center" style="color: #b6b5bf"></span>
@@ -70,6 +74,6 @@ const toBrand = () => {
           ><van-icon name="arrow" color="#B6B5BF"
         /></span>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
