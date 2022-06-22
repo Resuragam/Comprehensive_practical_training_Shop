@@ -131,6 +131,11 @@ const router = createRouter({
                     ]
                 },
                 {
+                    path: '/publish',
+                    name: "publish",
+                    component: () => import('@/view/publish/index.vue'),
+                },
+                {
                     path: '/login',
                     name: "login",
                     component: () => import('@/view/login/Login.vue'),

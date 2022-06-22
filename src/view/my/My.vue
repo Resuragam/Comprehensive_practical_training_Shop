@@ -15,6 +15,10 @@ const toBrand = () => {
 const toAudit = () => {
   router.push("/audit")
 }
+
+const toPublish = () => {
+  router.push('/publish')
+}
 </script>
 
 <template>
@@ -67,6 +71,24 @@ const toAudit = () => {
             class="font-semibold"
         /></span>
         <span class="flex items-center text-sm">商品审核</span>
+      </div>
+      <div class="flex text-xs">
+        <span class="flex items-center" style="color: #b6b5bf"></span>
+        <span class="flex items-center"
+          ><van-icon name="arrow" color="#B6B5BF"
+        /></span>
+      </div>
+    </div>
+    <div class="flex justify-between p-2 bg-white" @click="toPublish()" v-if="identity==='0'">
+      <div class="flex text-sm font-semibold">
+        <span class="mr-1"
+          ><van-icon
+            name="flower-o"
+            size="1rem"
+            color="#000000"
+            class="font-semibold"
+        /></span>
+        <span class="flex items-center text-sm">商品发布</span>
       </div>
       <div class="flex text-xs">
         <span class="flex items-center" style="color: #b6b5bf"></span>

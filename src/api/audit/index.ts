@@ -12,7 +12,7 @@ export function getBrandHasAuditProduct(brandId: string, current: number, limit:
 export function getBrandNotAuditProduct(brandId: string, current: number, limit: number) {
     return request({
         method: 'get',
-        url: `/infoservice/product/queryUnCheckedProduct/${brandId}/${current}/${limit}`
+        url: `/infoservice/product/queryUncheckProduct/${brandId}/${current}/${limit}`
     })
 }
 

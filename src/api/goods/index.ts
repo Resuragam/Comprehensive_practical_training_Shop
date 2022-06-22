@@ -28,5 +28,25 @@ export function getGoodsByGoodId(productId: string) {
         method: "get",
         url: `/infoservice/product/queryById/${productId}`,
     })
-    
+
+}
+
+// 详细描述：根据商品id 查询商品信息
+export function brandReleaseProduct(brandId: string, categoryId: string, productName: string, pic: string, sale: string, price: string, detailDesc: string, stock: string, description: string) {
+    return request({
+        method: "post",
+        url: '/infoservice/brand/releaseProduct',
+        data: {
+            brandId,
+            categoryId,
+            productName,
+            pic,
+            sale,
+            price,
+            detailDesc,
+            stock,
+            description,
+        }
+    })
+
 }

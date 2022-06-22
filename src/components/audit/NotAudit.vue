@@ -10,7 +10,6 @@ import { useStore } from "vuex";
 import {
   getBrandNotAuditProduct,
 } from "@/api/audit";
-import { Toast } from "vant";
 
 const store = useStore();
 const userId = store.state.user.userId;
